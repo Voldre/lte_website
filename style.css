@@ -1,0 +1,220 @@
+/*
+    Mon fichier style.css : Valentin Dubuc
+*/
+
+*
+/* sélecteur universelle, pour par exemple mettre une police identique partout*/
+
+{
+    font-family: Verdana, Georgia, serif;
+    /* SI l'internaute n'a pas la 1, il prend la 2, s'il ne l'a pas non plus, la troisième : serif (l'universelle) */
+    /* Police personnalisée :
+@font-face{
+    font-family:'MaSuperPolice';
+    src:url('MaSuperPolice.eot')format('eot'),
+    url('MaSuperPolice.woff')format('woff'),
+    url('MaSuperPolice.ttf')format('truetype')
+    ,url('MaSuperPolice.svg')format('svg');}
+*/
+}
+
+body {
+    /* Il est important de mettre le background dans le body et pas ailleurs */
+    background-image: url("images/background_site.png");
+    /* background-attachment:fixed;/* Le fond restera fixe */
+    background-repeat: no-repeat;
+    /* empêche que l'image se répète sur les côtés si elle est trop petite */
+    background-position: center;
+    /* centre l'image au lieu de la mettre en Top left */
+    /* équivalent à :  background: url("images/background_site.png") scroll no-repeat center;  */
+    /* on peut déclarer plusieurs background-image, il suffit d'espacer les déclarations par des virgules, 
+   les images se superposent donc l'ordre à une importance */
+    background-size: cover;
+    /* Prend la totalité de la taille de l'écran */
+    padding-right: 3%;
+    padding-bottom: 5%;
+    /* Marge interne */
+    min-width: 900px;
+    /* ne peut pas descendre sous 600px*/
+}
+
+h3 {
+    color: rgb(255, 166, 0);
+    font-size: 26px;
+    text-align: left;
+}
+
+h4 {
+    color: gold;
+    font-size: 22px;
+    text-align: left;
+}
+
+p,
+li {
+    color: rgb(255, 166, 0);
+    font-size: 14px;
+    text-align: justify;
+}
+
+li {
+    margin-top: 1.5%;
+    /* espacement entre chaque tiret*/
+}
+
+.test {
+    color: rgb(10, 10, 10);
+}
+
+p.test {
+    /* équivalent à p[class="test"]   */
+    /* Uniquement pour toutes les balises class:"test" se trouvant dans un <p> */
+    /* la configuration p.test dans une balise <p> aura la priorité sur .test, car elle est plus précise, donc la color de .test sera "recouverte" */
+    color: rgb(255, 210, 0);
+    font-style: italic;
+}
+
+a[title*="ici"] {}
+
+
+/* si le titre d'une balise <a> CONTIENT "ici" */
+
+a[title="ici"] {}
+
+
+/* si le titre d'unbe balsie <a> VAUT EXACTEMENT "ici" */
+
+.souligne {
+    text-decoration: underline;
+}
+
+.gras {
+    font-weight: bold;
+}
+
+.flottantG {
+    float: left;
+}
+
+.alignR {
+    text-align: right;
+}
+
+
+/* utilisation d'un ID plutôt que d'une classe, l'utilité est la même */
+
+#IDtest {
+    font-weight: bold;
+    text-decoration: underline;
+    color: rgb(0, 106, 255);
+    font-size: medium;
+    text-align: center;
+}
+
+
+/* Placement des différentes parties */
+
+header {
+    color: rgb(248, 149, 0);
+    display: flex;
+}
+
+header .compteur {
+    color: black;
+    text-align: center;
+    margin-left: 75%;
+    border-radius: 12px;
+    border: 1px solid;
+    border-color: rgb(0, 64, 255);
+    background-color: rgb(0, 64, 255);
+    display: flex;
+    font-size: 42px;
+}
+
+nav {
+    /*float: left; */
+    display: inline-block;
+    /* permet de mettre en ligne les 2, sinon float left*/
+    vertical-align: top;
+    /* alligne en haut*/
+    margin-top: 8%;
+    /* descend le menu de 10% de l'écran, essayer de voir pour avoir un meilleur outil! */
+    min-width: 200px;
+    /* ne peut pas descendre sous 200px*/
+    border: 1px dashed green;
+    margin-left: -1%;
+    /* recentre le menu */
+}
+
+nav a
+/* sélectionne toutes les balises <a> se trouvant dans un <ul> dans le <nav> */
+
+
+/* le "nav ul a" ne necessite pas le "ul" dans le cas présent */
+
+{
+    /* Joue sur les écris et la bordure */
+    color: white;
+    /* les écris seront tous en blanc */
+    border-radius: 15px;
+    /* arrondis */
+    border: 2px solid;
+    border-width: 16px;
+    border-color: rgb(0, 150, 150);
+    background-color: rgb(0, 150, 150);
+    text-align: center;
+}
+
+nav li
+/* les "li" dans le nav */
+
+{
+    /* Joue sur l'écart des menus et les puces*/
+    font-size: large;
+    font-style: normal;
+    margin-top: 20%;
+    list-style: none;
+    /* retire les puces */
+    text-align: center;
+    min-width: 150px;
+}
+
+section.first {
+    /* margin-left: 17%;
+    margin-right: 40%;*/
+    display: inline-block;
+    margin-top: 6%;
+    width: 630px;
+    min-width: 250px;
+    /* permet de le placer à 2% plus loin (si float: left en déclaration de nav) */
+    /* display: inline-block;*/
+    border: 1px dashed blue;
+}
+
+section.second {
+    /*margin-left: 65%;*/
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 9%;
+    width: 500px;
+    min-width: 225px;
+    border: 1px dashed red;
+    padding-left: 1.5%;
+    /* permet de créer une marge interne entre les 2 premières sections */
+}
+
+section.third {
+    margin-left: 23%;
+    margin-right: 20%;
+    width: 700px;
+    min-width: 300px;
+    /* display: inline-block;*/
+    border: 1px dashed white;
+    margin-top: 1%;
+}
+
+section.third p {
+    color: rgb(255, 255, 255);
+    /* équivalent à color : white*/
+    text-align: center;
+}
