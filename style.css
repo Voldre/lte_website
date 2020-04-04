@@ -74,15 +74,53 @@ p.test {
     font-style: italic;
 }
 
-a[title*="ici"] {}
+.red {
+    color: red;
+    text-align: left;
+    font-size: medium;
+    font-weight: bold;
+}
 
+article.download p {
+    /* les textes <p> dans article class="download" sont allignés */
+    text-align: center;
+    color: white;
+}
 
-/* si le titre d'une balise <a> CONTIENT "ici" */
+.one:hover {
+    border-radius: 6px;
+    /* arrondis */
+    border: 1px solid;
+    border-width: 1px;
+    border-color: rgba(195, 126, 195, 0.632);
+    background-color: rgba(250, 187, 233, 0.36);
+}
 
-a[title="ici"] {}
+.two:hover {
+    border-radius: 13px;
+    /* arrondis */
+    border: 1px solid;
+    border-width: 1px;
+    border-color: rgba(55, 30, 136, 0.68);
+    background-color: rgba(91, 86, 228, 0.394);
+}
 
+.three:hover {
+    border-radius: 13px;
+    /* arrondis */
+    border: 1px solid;
+    border-width: 1px;
+    border-color: rgba(204, 120, 31, 0.626);
+    background-color: rgba(243, 171, 36, 0.319);
+}
 
-/* si le titre d'unbe balsie <a> VAUT EXACTEMENT "ici" */
+a[title*="ici"] {
+    /* si le titre d'une balise <a> CONTIENT "ici" */
+}
+
+a[title="ici"] {
+    /* si le titre d'unbe balsie <a> VAUT EXACTEMENT "ici" */
+}
 
 .souligne {
     text-decoration: underline;
@@ -112,11 +150,12 @@ a[title="ici"] {}
 }
 
 
-/* Placement des différentes parties */
+/* ------------------------- Placement des différentes parties ------------------------- */
 
 header {
     color: rgb(248, 149, 0);
     display: flex;
+    border: 1px dashed rgb(170, 255, 85);
 }
 
 header .compteur {
@@ -209,12 +248,25 @@ section.third {
     width: 700px;
     min-width: 300px;
     /* display: inline-block;*/
-    border: 1px dashed white;
+    border: 1px dashed rgb(255, 255, 255);
     margin-top: 1%;
 }
 
 section.third p {
-    color: rgb(255, 255, 255);
+    color: rgb(200, 200, 200);
+    /* équivalent à color : white*/
+    text-align: center;
+}
+
+footer {
+    border: 1px dashed rgb(170, 255, 85);
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-left: 16%;
+    margin-right: 20%;
+}
+
+footer p {
+    color: rgb(220, 220, 200);
     /* équivalent à color : white*/
     text-align: center;
 }
