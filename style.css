@@ -149,6 +149,13 @@ a[title="ici"] {
     text-align: center;
 }
 
+.diapo {
+    width: 400px;
+    height: 270px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* ------------------------- Placement des différentes parties ------------------------- */
 

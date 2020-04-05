@@ -97,6 +97,9 @@
 
             <p> ------ <br/> Je laisse de l'espace pour ajouter ici un scrolling entre les différents articles (annonces). <br/> -------</p>
 
+
+
+
             <article class="download">
                 <h3 class="souligne">Cliquer sur le jeu que vous souhaitez télécharger!</h3>
                 <figure>
@@ -157,17 +160,24 @@
                 </audio> Forêt de l'île maudite </p>
 
 
-
+                <br/> <br/> <br/>
                 <p id="IDtest">Images des jeux</p>
 
-                <p> Voici différentes images du jeu, cliquez dessus pour les ouvrir en grandes ! </p>
+                <p> Voici différentes images du jeu, vous pouvez cliquer dessus pour les ouvrir en grandes ! </p>
 
+                <a href="images/image_olko.png" target="_blank"><img class="diapo" src='images/image_olko.png' style="display: block;"></a>
+                <a href="images/exemple_menu.png" target="_blank"><img class="diapo" src='images/exemple_menu.png' style="display: none;"></a>
+                <a href="images/equipe_dechu.png" target="_blank"><img class="diapo" src='images/equipe_dechu.png' style="display: none;"></a>
+                <a href="images/vayl_presentation.png" target="_blank"><img class="diapo" src='images/vayl_presentation.png' style="display: none;"></a>
+
+
+                <!--
                 <figure>
                     <a href="images/kzina_aria.png"></ahref> <img src="images/kzina_aria_th.png" alt="Attaque duo Kzina et Aria" /></a>
                     <a href="images/image_velrod.png"> </ahref><img src="images/image_velrod_th.png" alt="Velrod à l'éternité déchu" /></a>
                     <a href="images/vayl_presentation.png"> </ahref><img src="images/vayl_presentation_th.png" alt="Présentation de Vayl de l'univers" /></a>
                 </figure>
-
+                -->
             </section>
 
 
@@ -201,6 +211,7 @@
 
             <!--------------------------------- JAVASCRIPT PART    --------------------------->
 
+            <!-- Compteur -->
             <script type="text/javascript">
                 var compteur = 0;
                 compteur += 1;
@@ -208,7 +219,24 @@
                 document.getElementById("compteur").innerHTML = compteur;
             </script>
 
+            <!-- Diaporama d'images    -->
+            <script type="text/javascript">
+                I = 3; // On commence à I = 3 car il y a déjà 3 images utilisés dans la page (pour LTE1,2,3, donc la place 0,1,2 sont occupés)
+                Imax = document.images.length - 1;
+                setTimeout(suivante, 2000);
 
+                function suivante() {
+                    document.images[I].style.display = "none";
+                    if (I < Imax)
+                        I++;
+                    else
+                        I = 3; // Réinitialisation de la boucle
+                    document.images[I].style.display = "block";
+                    setTimeout(suivante, 2000);
+                }
+            </script>
+
+            <!-- Diaporama des articles (annonces) -->
 
 
             <script type="text/javascript">
