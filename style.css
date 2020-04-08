@@ -50,6 +50,17 @@ h4 {
     text-align: left;
 }
 
+h5 {
+    color: rgba(0, 255, 30, 0.524);
+    font-size: 17px;
+    text-align: center;
+}
+
+button {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 p,
 li {
     color: rgb(255, 166, 0);
@@ -235,6 +246,19 @@ section.first {
     /* permet de le placer à 2% plus loin (si float: left en déclaration de nav) */
     /* display: inline-block;*/
     border: 1px dashed blue;
+}
+
+#article_1,
+#article_2,
+#article_3,
+#article_4 {
+    border: 1px dashed rgb(245, 201, 58);
+    height: 600px;
+    background-color: rgba(0, 0, 0, 0.3)
+}
+
+.collapse {
+    display: none;
 }
 
 section.second {
