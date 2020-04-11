@@ -253,8 +253,14 @@ section.first {
 #article_3,
 #article_4 {
     border: 1px dashed rgb(245, 201, 58);
-    height: 600px;
-    background-color: rgba(0, 0, 0, 0.3)
+    height: 500px;
+    background-color: rgba(0, 0, 0, 0.3);
+    overflow: scroll;
+    /* Ajoute un curseur pour scroller le texte qui n'est pas affiché */
+    overflow-x: hidden;
+    /* impossible de scroller de gauche à droite */
+    padding-right: 10px;
+    /* éloigne le texte de 10px à droite du curseur de scroll */
 }
 
 .collapse {
