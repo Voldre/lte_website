@@ -125,13 +125,24 @@ article.download p {
     background-color: rgba(243, 171, 36, 0.319);
 }
 
+
+/*
 a[title*="ici"] {
     /* si le titre d'une balise <a> CONTIENT "ici" */
-}
 
+
+/*
+}
+*/
+
+
+/*
 a[title="ici"] {
     /* si le titre d'unbe balsie <a> VAUT EXACTEMENT "ici" */
-}
+
+
+/*
+} */
 
 .souligne {
     text-decoration: underline;
@@ -253,7 +264,7 @@ section.first {
 #article_3,
 #article_4 {
     border: 1px dashed rgb(245, 201, 58);
-    height: 500px;
+    height: 520px;
     background-color: rgba(0, 0, 0, 0.3);
     overflow: scroll;
     /* Ajoute un curseur pour scroller le texte qui n'est pas affiché */
