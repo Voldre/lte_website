@@ -13,11 +13,6 @@
 
     <!-- permet d'être compatible avec d'anciennes version d'Internet Explorer-->
 
-    <meta name="format-detection" content="telephone=no" />
-
-    <meta id="wixMobileViewport" name="viewport" content="width=980, user-scalable=yes" />
-
-    <meta name="google-site-verification" content="jnkZGiCBus4HjXKu-MXbX3L5sw4EDbaZyzTMz5uGxgg" />
 
     <title>Les trente élus</title>
 
@@ -210,14 +205,6 @@
 
             <!--------------------------------- JAVASCRIPT PART    --------------------------->
 
-            <!-- Compteur -->
-            <script type="text/javascript">
-                var compteur = 0;
-                compteur += 1;
-                compteur = "0000" + compteur;
-                document.getElementById("compteur").innerHTML = compteur;
-            </script>
-
             <!-- Diaporama d'images    -->
             <script type="text/javascript">
                 I = 3; // On commence à I = 3 car il y a déjà 3 images utilisés dans la page (pour LTE1,2,3, donc la place 0,1,2 sont occupés)
@@ -234,10 +221,6 @@
                     setTimeout(suivante, 2000);
                 }
             </script>
-
-
-
-
 
 
             <!--------- Diaporama des articles (annonces) --------->
@@ -258,8 +241,6 @@
 
                 nb_article = 4;
                 i_article = 1;
-
-
 
                 function Slider(x) {
                     // alert("le test fonctionne");
@@ -349,13 +330,13 @@
 
 
 
-
+            <!--
             <script type="text/javascript">
                 var htmlClassList = document.documentElement.classList;
                 var bodyCacheable = false;
                 var clientSideRender = false;
             </script>
-
+            -->
 
 
 </body>
