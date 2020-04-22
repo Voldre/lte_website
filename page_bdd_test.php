@@ -252,6 +252,32 @@ while ($donnees = $requete_7->fetch())
         if ($donnees['date_expiration'] > NOW()) { ... }
 */
 
+?>
+
+<p> -------- Les Jointures ------------- </p>
+
+<?php
+                                                                    //OUTER, LEFT, RIGHT, ...
+// Pour les jointures : SELECT table1.truc , table2.truc2 FROM table1 INNER JOIN table2   ON table1.ID_table2 = table2.ID
+                                    // on peut écrire t1.truc si on a "table1 AS t1"       On joint en reliant les ID en commun des 2 tabkes
+
+    // Exemple : 
+$requete_8 = $bdd ->query('SELECT c.ID , c.Auteur, c.Content, c.date_commentaire,   a.title , a.content , a.date_creation 
+FROM commentaires AS c 
+INNER JOIN articles AS a 
+ON c.ID_article = a.ID  
+LIMIT 0,10              ');
+// A la place d'INNER on peut mettre FULL OUTER, LEFT, RIGHT, ... voir l'image regroupant tous les cas
+
+while ($donnees = $requete_8->fetch()) 
+{ 
+  //  echo "<p>Dans cet exemple (INNER JOIN) on peut afficher différentes données à la fois ", $donnees['commentaire_content'], " ou ", $donnees['date_commentaire'] , "d'un commentaire";
+    echo "<p> La majuscule compte, et suffit pour différencier les 2 : Article_content : ", nl2br($donnees['content']), " et Commentaire_Content : ", nl2br($donnees['Content']), "</p>" ;
+  //  echo "<p>mais aussi côté article : ", $donnees['title'], " ou ", $donnees['article_content'];
+}
+
+
+
 
 // Liste des fonctions courantes : https://sql.sh/fonctions
 

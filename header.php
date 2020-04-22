@@ -38,17 +38,11 @@ fclose($monfichier);
 
         <?php 
         
-        if ($pages_vues >= 1000)
-        {
-            echo "0", $pages_vues; 
-        } else if ($pages_vues >= 100)
-        {
-            echo "00", $pages_vues; 
-        } else
-        {
-            echo "000" , $pages_vues; 
-        }
+        echo sprintf("%05d", $pages_vues); // sprintf("$0Xd",$var) permet d'afficher un nombre minimum de chiffres
+        // Les chiffres pas existant seront donc précédés de "0", exemple : avec %05d pour "36" on aura "00036" d'afficher
+
         ?>
+        
         </h2>
 
 
