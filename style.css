@@ -318,3 +318,28 @@ footer p {
     /* équivalent à color : white*/
     text-align: center;
 }
+
+
+/* ---------- Partie CSS dédier aux "blogs" --------- */
+
+.blog {
+    text-align: center;
+}
+
+article.blog {
+    margin-left: 25%;
+    margin-right: 25%;
+    border: 1px solid white;
+    border-width: 2px;
+    border-radius: 8px;
+}
+
+h4.blog {
+    background-color: black;
+    color: white;
+}
+
+p.blog {
+    background-color: rgba(67, 28, 197, 0.714);
+    color: black;
+}

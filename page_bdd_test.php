@@ -69,7 +69,7 @@ if (isset($_GET['nom_console']))    // Si le parametre nom_console est pas trans
         echo "<p>Voici le jeu ", $donnees['nom'] , " se trouvant sur la console suivante : ", $donnees['console'], ", voici son prix :" , $donnees['prix'], "</p>";
     }
 
-$reponse->closeCursor(); // Termine le traitement de la requête
+$requete->closeCursor(); // Termine le traitement de la requête
 
 }
 ?>
@@ -77,10 +77,10 @@ $reponse->closeCursor(); // Termine le traitement de la requête
 <p> ------------ INSERER des données dans lesquelles on laisse l'utilisateur choisir -------- </p>
 
 <?php
-
+    //Je viens d'ajouter une colonne date_ajout, et ajouter un jeu met automatiquement la date actuelle, on voit bien date_ajout ...VALUES(?,?,?,NOW()) en Ligne 83
 if (isset($_POST['nom_de_mon_jeu']) && isset($_POST['nom_du_possesseur']) && isset($_POST['prix_de_mon_jeu']))  
 {
-    $requete_2 = $bdd ->prepare('INSERT INTO jeux_video(nom, possesseur, prix) VALUES (?,?,?) ');  
+    $requete_2 = $bdd ->prepare('INSERT INTO jeux_video(nom, possesseur, prix, date_ajout) VALUES (?,?,?, NOW()) ');  
                                                                                
     $requete_2 -> execute(array($_POST['nom_de_mon_jeu'], $_POST['nom_du_possesseur'],$_POST['prix_de_mon_jeu'])); 
     
@@ -105,11 +105,11 @@ else
 ?>
 
 <p> ------------UPDATE (mettre à jour) des données dans la table -------- </p>
-
+          <!-- Je viens d'ajouter une colonne date_ajout, et mettre à jour un jeu met automatiquement la date actuelle, on voit bien date_ajout=NOW() en Ligne 112-->
 <?php
 if (isset($_POST['nouveau_possesseur']) && isset($_POST['numero_du_jeu']))   
 {
-    $requete_3 = $bdd ->prepare('UPDATE jeux_video SET possesseur = ? WHERE ID = ? ');  
+    $requete_3 = $bdd ->prepare('UPDATE jeux_video SET possesseur = ? , date_ajout=NOW() WHERE ID = ? ');  
                                                                                
     $requete_3 -> execute(array($_POST['nouveau_possesseur'], $_POST['numero_du_jeu'])); 
     
@@ -157,7 +157,135 @@ else
 
     <?php // bien fermer la parenthèse
 }
+
+
+// FONCTIONS SQL
+
+
+// ('SELECT UPPER(nom) AS nom_majuscule , console, prix FROM jeux_video WHERE ... )
+
+// echo "<p>" , $VariableDuWhile['nom_majuscule'], </p> ;
+
+//          LOWER           minuscule
+//          LENGHT          longueur (en chiffres) de la chaîne
+
+
+// ***********************************
+    // L'intérêt c'est que le AS attribue un nom à cette donnée transformée par une fonction
+    // Ce qui rend son utilisation BEAUCOUP plus clair, comme le nom de l'alias ci-dessous
+// **********************************
+ /*   
+    $requete_5 = $bdd ->query('SELECT AVG(prix) AS prix_moyen_jeu_pc FROM jeux_video WHERE console="PC"');
+
+    while ($donnees = $requete_5->fetch()) 
+    { 
+        echo "<p>Le prix moyen des jeux sur PC vaut : ", $donnees['prix_moyen_jeu_pc'] , "€";
+    } */
+
+$requete_5 = $bdd ->query('SELECT ROUND(AVG(prix),3) AS prix_moyen_jeu_pc FROM jeux_video WHERE console="PC"');
+                            // On peut coller 2 fonctions comme ceci
+                            // Ici on arrondis au millième la valeur de la moyenne, car on a mis ROUND(x,3), 3 après la virgule
+
+while ($donnees = $requete_5->fetch()) 
+{ 
+    echo "<p>Le prix moyen des jeux sur PC vaut : ", $donnees['prix_moyen_jeu_pc'] , "€";
+}
+
+
+
+$requete_5_bis = $bdd ->query('SELECT SUM(prix) AS prix_total FROM jeux_video');
+
+while ($donnees = $requete_5_bis->fetch()) 
+{ 
+    echo "<p>Le prix total des jeux est de : ", $donnees['prix_total'] , "€";
+}
+
+
+
+
+
+$requete_6 = $bdd ->query('SELECT SUM(prix) AS prix_total_jeu_xbox FROM jeux_video WHERE console="XBOX"');
+
+while ($donnees = $requete_6->fetch()) 
+{ 
+    echo "<p>Le prix total des jeux sur XBOX est de : ", $donnees['prix_total_jeu_xbox'] , "€. Requête n°6 : utilisation du WHERE, et pas de group by console.";
+}
+
+// SELECT MAX(prix) AS jeu_le_plus_cher
+
+// SELECT MIN(prix) ... 
+
+// SELECT COUNT(*) FROM jeux_video  // <=> "combien y a t'il de jeu dans la liste?
+// SELECT COUNT(*) FROM jeux_video WHERE console="PC" OR console="PS2" // <=> combien y a t'il de jeu de PC et/ou PS2?
+
+// On pourrait aussi dire "combien y a t'il de jeu gratuit", ou "combien y a t'il de jeu >10€", etc...
+
+
+        // Le GROUP BY = Regrouper les données par paquet
+
+    // SELECT AVG(prix) AS prix_moyen, console FROM jeux_video GROUP BY console ORDER BY prix_moyen
+    // On affiche le prix moyen des jeux sur chaque console, donc prix moyen ps4, xbox ...
+
+        // HAVING <=> WHERE mais quand il y a GROUP BY. le WHERE n'agit pas avec des regroupements. HAVING agit SUR le regroupement
+
+    // SELECT AVG(prix) AS prix_moyen, console FROM jeux_video GROUP BY console HAVING prix_moyen <= 10  ORDER BY prix_moyen
+        // <=> afficher le prix moyen des jeux selon leur console, SACHANT qu'on affiche que si c'est <= à 10€
+
+    $requete_7 = $bdd ->query('SELECT SUM(prix) AS prix_total_par_console , console FROM jeux_video GROUP BY console ORDER BY prix_total_par_console DESC');
+// Il est important de "traduire" pour voir si on a compris, ici :   Affichera la somme des prix des jeux par console, en triant du + cher au - cher
+
+while ($donnees = $requete_7->fetch()) 
+{ 
+    echo "<p>Le prix total des jeux sur: ", $donnees['console'], "  vaut  ", $donnees['prix_total_par_console'] , "€";
+}
+
+
+/* Pour les dates, on a aussi SELECT DAY(date_ajout) AS numero_jour FROM ... WHERE ...
+        Qui donnera le numéro du jour pour chaque jeu
+
+        DATE_SUB(date_ajout , INTERVAL 15 DAY)
+        /DATE_ADD(date_naissance, INTERVAL 1 YEAR)
+        Permet de modifier une date d'une donnée, une sorte de UPDATE. Puis avec WHERE, on peut choisir quelles dates modifier
+
+
+    L'utilité c'est de créer des dates d'expiration par exemple, "si date dépassé, alors tel truc"
+        if ($donnees['date_expiration'] > NOW()) { ... }
+*/
+
+
+// Liste des fonctions courantes : https://sql.sh/fonctions
+
+// Il est possible de personnaliser des requêtes de fonctions en laissant l'utilisateur choisir les paramètres (ex : nb messages to show).
+
+
+/*  Majuscules importantes dans SELECT
+
+echo "<p>", $donnees['Content'],"</p>";
+
+ LES MAJUSCULES COMPTENT dans la récupération des données de la BDD
+
+ DONC, ne JAMAIS mettre de MAJUSCULE dans les NOMS DE CHAMPS! Sous peine de faire des erreurs
+
+
+// Ordre de Syntaxe important :  WHERE    PUIIS    ORDER BY,  PAS L'INVERSE ! ! ! ! ! Sinon ça plante
+
+
+ // Déclaration dans SELECT
+
+Si on utilise une variable dans une fonction comme : SELECT COUNT(mavariable) FROM
+Il ne sera pas possible d'utiliser $donnees['mavariable']
+
+Car elle est dans une fonction, du coup on écrira :   SELECT mavariable, COUNT(mavariable) FROM
+
+Ainsi, il est possible d'écrire : SELECT * , AVG(var), SUM(var2) FROM
+*/
+
 ?>
+
+
+
+
+
 
 </body>
 
