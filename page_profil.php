@@ -17,22 +17,20 @@ include("menu.php");
 
 
 <?php
+$image_profil = 0;
 
-$image_profil = 'avatars/'.$_SESSION['id'].'.png';
- 
-if (file_exists($image_profil)) 
+if(isset($_SESSION['id']) && isset($_SESSION['pseudo']))
 {
-    echo "<img class=\"imageprofil\" src='avatars/",$_SESSION['id'],".png'>";
-} 
-else 
-{
-	echo "<p>Vous n'avez pas d'image de profil.</p>";
-}
+    $image_profil = 'avatars/'.$_SESSION['id'].'.png';
+    if (file_exists($image_profil)) 
+    {
+        echo "<img class=\"imageprofil\" src='avatars/",$_SESSION['id'],".png'>";
+    } 
+    else 
+    {
+        echo "<p>Vous n'avez pas d'image de profil.</p>";
+    }
 
-?>
-
-
-<?php
     if(isset($_POST['modifier_avatar']))
     {
         ?>
@@ -52,7 +50,9 @@ else
     </form>
 <?php
     }
-    
+}
+
+
     // Réception du fichier
 if (isset($_FILES['monfichier']))
 {

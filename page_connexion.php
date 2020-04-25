@@ -17,6 +17,8 @@ include("menu.php");
         {
             echo "<h5>Vous êtes connecté en tant que : " , strtolower($_SESSION['pseudo']) , " .</h5>";
 
+            echo"<p><a href=\"page_profil.php\">Cliquez ici pour consulter votre profil</a>";
+
             echo"<p><a href=\"page_deconnexion.php\" class=\"red\">Cliquez ici pour vous déconnecter</a>";
         }
  else

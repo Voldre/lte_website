@@ -6,8 +6,13 @@
         }
         catch (Exception $e)
         {
-                die('Erreur : ' . $e->getMessage());
+        //die('Erreur : ' . $e->getMessage());
+            
+        header('Location: page_accueil.php'); // On retourne à l'écran d'accueil si la BDD n'est pas créé
+        
         }  
+
+
 
     session_start();    // Toujours en premier
 

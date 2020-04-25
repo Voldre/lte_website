@@ -165,6 +165,16 @@ a[title="ici"] {
     height: 280px;
 }
 
+.imageprofil_commentaire {
+    float: right;
+    width: 80px;
+    height: 100px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-width: 2px;
+    border-radius: 8px;
+}
+
 
 /* utilisation d'un ID plutôt que d'une classe, l'utilité est la même */
 
@@ -207,6 +217,22 @@ header .compteur {
 
 header div {
     margin-left: 75%;
+}
+
+.creer_la_bdd {
+    background-color: rgb(107, 4, 4);
+    width: 100%;
+}
+
+.bdd_ajoutee {
+    background-color: rgb(23, 136, 6);
+    width: 100%;
+}
+
+p.creer_la_bdd,
+p.bdd_ajoutee {
+    color: white;
+    text-align: center;
 }
 
 header a {
