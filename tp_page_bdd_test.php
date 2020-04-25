@@ -283,7 +283,6 @@ while ($donnees = $requete_8->fetch())
 
 // Il est possible de personnaliser des requêtes de fonctions en laissant l'utilisateur choisir les paramètres (ex : nb messages to show).
 
-
 /*  Majuscules importantes dans SELECT
 
 echo "<p>", $donnees['Content'],"</p>";

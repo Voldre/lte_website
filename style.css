@@ -88,7 +88,6 @@ p.test {
 .red {
     color: red;
     text-align: left;
-    font-size: medium;
     font-weight: bold;
 }
 
@@ -160,14 +159,20 @@ a[title="ici"] {
     text-align: right;
 }
 
+.imageprofil {
+    float: right;
+    width: 220px;
+    height: 280px;
+}
+
 
 /* utilisation d'un ID plutôt que d'une classe, l'utilité est la même */
 
-#IDtest {
+p#IDtest {
     font-weight: bold;
     text-decoration: underline;
     color: rgb(0, 106, 255);
-    font-size: medium;
+    font-size: 20px;
     text-align: center;
 }
 
@@ -185,18 +190,31 @@ header {
     color: rgb(248, 149, 0);
     display: flex;
     border: 1px dashed rgb(170, 255, 85);
+    height: 160px;
+    /* évite d'avoir un header trop grand (qui dépasse à cause du menu connexion/deconnexion */
 }
 
 header .compteur {
     color: black;
     text-align: center;
-    margin-left: 75%;
     border-radius: 12px;
     border: 1px solid;
     border-color: rgb(0, 64, 255);
     background-color: rgb(0, 64, 255);
     display: flex;
     font-size: 42px;
+}
+
+header div {
+    margin-left: 75%;
+}
+
+header a {
+    text-align: center;
+    margin-left: 2%;
+    border-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
 }
 
 nav {
@@ -266,7 +284,7 @@ section.first {
     border: 1px dashed rgb(245, 201, 58);
     height: 520px;
     background-color: rgba(0, 0, 0, 0.3);
-    overflow: scroll;
+    overflow-y: auto;
     /* Ajoute un curseur pour scroller le texte qui n'est pas affiché */
     overflow-x: hidden;
     /* impossible de scroller de gauche à droite */
@@ -317,6 +335,19 @@ footer p {
     color: rgb(220, 220, 200);
     /* équivalent à color : white*/
     text-align: center;
+}
+
+aside {
+    float: right;
+    width: 260px;
+    /*border: 1px dashed rgb(220, 220, 200);*/
+    background-color: rgba(0, 0, 0, 0.8)
+}
+
+aside img {
+    padding-right: 5%;
+    padding-left: 3%;
+    padding-top: 3%;
 }
 
 

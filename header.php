@@ -1,6 +1,8 @@
-<header>
 
-        <?php 
+<header>
+<?php
+
+session_start();    // Toujours en premier
 
         // 1 : on ouvre le fichier
 $monfichier = fopen('compteur.txt', 'r+');
@@ -32,12 +34,26 @@ fclose($monfichier);
         $jour = date("d");
 
         echo "<h5>Site réalisé par Voldre (01/04/2020) <br/> Nous sommes le $jour/$mois/$annee </h5>";
+        
         ?>
         
+    <div>
+        <?php
+    if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
+        {
+            echo "<h5>Bonjour " , strtolower($_SESSION['pseudo']) , "</h5>";
+        }
+    else
+    {
+        echo"<h4><a href=\"page_inscription.php\">Inscription</a></h4>";
+    }
+        ?>  
+
         <h2 class="compteur">
 
         <?php 
-        
+      
+      
         echo sprintf("%05d", $pages_vues); // sprintf("$0Xd",$var) permet d'afficher un nombre minimum de chiffres
         // Les chiffres pas existant seront donc précédés de "0", exemple : avec %05d pour "36" on aura "00036" d'afficher
 
@@ -45,5 +61,16 @@ fclose($monfichier);
         
         </h2>
 
-
+        <?php
+        
+        if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
+        {
+            echo"<h4><a href=\"page_deconnexion.php\" class=\"red\">Déconnexion</a></h4>";
+        }
+        else
+        {
+            echo"<h4><a href=\"page_connexion.php\" id=\"IDtest\">Connexion</a></h4>";
+        }
+        ?>
+    </div>
     </header>

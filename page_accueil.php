@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -109,7 +111,7 @@
 
 
             <article class="download">
-                <h3 class="souligne">Cliquer sur le jeu que vous souhaitez télécharger!</h3>
+                <h3 class="souligne">Cliquez sur le jeu que vous souhaitez télécharger!</h3>
                 <figure>
                     <figcaption class="red">Il est conseillé de commencer par le 3ème jeu!!</figcaption>
 

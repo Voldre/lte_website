@@ -25,6 +25,12 @@
 
 <body>
 
+<?php
+
+include("header.php");
+
+?>
+
 <p> Mes statistiques :</p>
 
 <?php
