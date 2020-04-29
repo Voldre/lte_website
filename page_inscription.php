@@ -21,7 +21,7 @@ if (isset($_POST['pseudo']) && isset($_POST['password']) && isset($_POST['passwo
 
                 // Verification des pseudos enregistrés dans la BDD ...
 
-    $requete_pseudo = $bdd ->query('SELECT pseudo FROM membres');    
+    $requete_pseudo = $bdd ->query('SELECT pseudo, email FROM membres');    
                
     while ($donnees = $requete_pseudo->fetch()) 
 {
@@ -32,6 +32,14 @@ if (isset($_POST['pseudo']) && isset($_POST['password']) && isset($_POST['passwo
         echo "<p class=\"red\">Ce pseudo existe déjà, veuillez en choisir un autre</p>";
         $_POST['pseudo'] = "X"; // Le pseudo étant changé par "X", il devient inférieur à 5 lettres, donc la table ne l'enregistrera pas.
         //  De plus, il ne dira pas que le pseudo est trop court, car le message "trop court" s'affiche uniquement si pseudo < 5 et s'il est différent de "X"
+    }
+    if( $donnees['email'] == $_POST['email'] ) // Si pseudo enregistrés = pseudo choisis
+    {       //str to upper = mettre en majuscule, cela évite de saisir 2 pseudos identiques comme "Florian" et "florian", ou encore "floRIan"
+                // Car l'on compare 2 pseudos étant tous deux en majuscules complètes
+
+        echo "<p class=\"red\">Un compte existe déjà avec cet email, souhaitez-vous vous <a href=\"page_connexion.php\">connecter</a>?</p>";
+        $_POST['email'] = "X"; // L'email étant changé par "X", il ne respecte plus l'expression régulière et est donc invalide.
+        
     }
 }
 

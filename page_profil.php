@@ -175,6 +175,148 @@ else
 
 
 
+<p>Vous pouvez modifier vos données personnelles :</p>
+
+
+
+
+
+       <!--------------- Partie dédié au changement de Mot De Passe --------------------->
+       <?php   
+if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
+{
+ 
+
+
+    if(isset($_POST['modifier_pseudo']))
+    {
+    ?>
+        <form method="post">
+        <p>Tapez votre nouveau pseudo :<input type="text" name="new_pseudo" /></p>
+        <p>Confirmez votre nouveau pseudo :<input type="text" name="new_pseudo_2" /></p>
+        <input type="submit" value="Enregistrer mon nouveau pseudo" />
+        </form>
+        <form>
+        <input type="submit" value="Annuler" />
+        </form>
+    <?php
+    }
+    else //Donc si on a pas cliqué sur le bouton, on l'affiche
+    {
+    ?>
+    <form method="post">
+    <input type="submit" name="modifier_pseudo" value="Modifier mon pseudo" />
+    </form>
+    <?php
+    }
+    
+    if(isset($_POST['new_pseudo']) && isset($_POST['new_pseudo_2']) )
+    {
+        if ($_POST['new_pseudo'] != $_POST['new_pseudo_2'] )
+        {
+            echo "<p class=\"red\">Votre nouveau pseudo saisie est différent entre les 2 champs, réessayez de nouveau.</p>";
+        }
+        else if(strlen($_POST['new_pseudo']) < 5)
+        {
+            echo "<p>Votre pseudo est trop petit, il doit comprendre minimum 5 caractères.</p>";
+        }
+        else
+        {
+
+            // VERIFIER QUE LE NOUVEAU PSEUDO NE SOIT PAS PRIS PAR QUELQU'UN ! SINON GROS PROBLEME : #CLaireD = Michel
+            // LIER LES MESSAGES ENVOYER A UN UTILISATEUR (ID) et pas pseudo car il peut modifier son pseudo ! ! !
+
+
+            $_POST['new_pseudo'] = strtoupper(htmlspecialchars($_POST['new_pseudo'])); // Anti faille XSS ++ le Pseudo est toujours écrit en MAJUSCULE
+                                    // Ce qui évite des problèmes de logins, exemple : Florian != floRIAN != FLORIAN, là, tout est identique grace au strtoupper
+
+        $requete_pseudo = $bdd ->prepare('UPDATE membres SET pseudo = ? WHERE ID = ?  ');  
+                                              
+        
+        $requete_pseudo -> execute(array($_POST['new_pseudo'],$resultat['ID']));   
+        echo "<p id=\"IDtest\">Votre nouveau pseudo a bien été enregistré!";
+        
+        $_SESSION['id'] = $resultat['ID'];
+        $_SESSION['pseudo'] = $_POST['new_pseudo'];
+
+        }   
+    }
+
+}
+?>
+
+
+
+
+
+
+
+
+       <!--------------- Partie dédié au changement de Mot De Passe --------------------->
+       <?php   
+if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
+{
+ 
+
+
+    if(isset($_POST['modifier_mdp']))
+    {
+    ?>
+        <form method="post">
+        <p>Tapez votre mot de passe actuel : <input type="password" name="actual_password" /></p>
+        <p>Tapez votre nouveau mot de passe :<input type="password" name="new_password" /></p>
+        <p>Confirmez votre nouveau MDP :<input type="password" name="new_password_2" /></p>
+        <input type="submit" value="Enregistrer mon nouveau mot de passe" />
+        </form>
+        <form>
+        <input type="submit" value="Annuler" />
+        </form>
+    <?php
+    }
+    else //Donc si on a pas cliqué sur le bouton, on l'affiche
+    {
+    ?>
+    <form method="post">
+    <input type="submit" name="modifier_mdp" value="Modifier mon mot de passe" />
+    </form>
+    <?php
+    }
+    
+    if(isset($_POST['actual_password']) && isset($_POST['new_password']) && isset($_POST['new_password_2']) )
+    {
+        $isPasswordCorrect = password_verify($_POST['actual_password'], $resultat['mdp']); // Il faut DE-HACHER (vérifier) le mot de passe pour pouvoir comparer correctement!
+                    // Renvoie TRUE or FALSE.  Si on le passe pas à la moulinette, on pourra pas vérifier s'ils sont identiques!
+        
+        if (!$isPasswordCorrect) // $_POST['actual_password'] != $resultat['mdp'] <=> Si $isPasswordCorrect renvoie FALSE! donc (!) 
+        {
+            echo "<p class=\"red\">Vous n'avez pas tapez le bon mot de passe actuel, accès refusé.</p>";
+        }
+        else if ($_POST['new_password'] != $_POST['new_password_2'] )
+        {
+            echo "<p class=\"red\">Votre nouveau mot de passe saisie est différent entre les 2 champs, réessayez de nouveau.</p>";
+        }
+        else if (strlen($_POST['new_password']) < 6)
+        {
+            echo "<p class=\"red\"> Votre mot de passe est trop court, saisissez-en un autre (6 caractères minimum)</p>";
+        }
+        else
+        {
+        $requete_mdp = $bdd ->prepare('UPDATE membres SET mdp = ? WHERE ID = ?  ');  
+                                              
+        
+        $password_hache = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+
+
+        $requete_mdp -> execute(array($password_hache,$resultat['ID']));   
+        echo "<p id=\"IDtest\">Votre nouveau mot de passe a bien été enregistré!";
+        }   
+    }
+
+}
+?>
+
+
+
 
 </section>
 
