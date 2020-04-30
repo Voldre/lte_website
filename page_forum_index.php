@@ -14,11 +14,15 @@ include("menu.php");
 
 
 <?php
-    $reponse = $bdd ->query('SELECT * FROM articles ORDER BY date_creation DESC LIMIT 5');    
-            
+  //  $reponse = $bdd ->query('SELECT * FROM articles ORDER BY date_creation DESC LIMIT 5');    
+    
+  // Passons par les jointures pour récupérer la correspondance PSEUDO = Nom d'auteur quand membres.ID = articles.ID_auteur
+
+    $reponse = $bdd ->query('SELECT *, articles.ID AS ID_article FROM articles INNER JOIN membres ON membres.ID = articles.ID_auteur ORDER BY date_creation DESC LIMIT 8');
+
 while ($donnees = $reponse->fetch()) 
 { 
-    $articleID = $donnees['ID'];
+    $articleID = $donnees['ID_article'];
 
 
 ?>
@@ -29,7 +33,7 @@ while ($donnees = $reponse->fetch())
      <a class="blog" href="page_forum_article.php?articleID=<?php echo $articleID ; ?>">
 
         <?php
-        echo "<h5>Ecrit par : ", $donnees['auteur'] , "</h5>";
+        echo "<h5>Ecrit par : ", $donnees['pseudo'] , "</h5>"; // Autorisé car on extrait aussi "pseudo" de la table "membres"
         echo "<h4 class=\"blog\">", $donnees['title'] , "</h4>";
         echo "<p class=\"blog\">", nl2br($donnees['content']), "</p>";
 

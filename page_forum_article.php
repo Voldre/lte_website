@@ -20,8 +20,10 @@ if (isset($_GET['articleID']))  // Si on est arrivé ici en cliquant sur un arti
 
     echo "<p>Vous êtes sur la page de l'article  " , $_GET['articleID'], "  pour changez d'article, changer le numéro dans l'URL.</p>";
 
-        $requete = $bdd ->prepare('SELECT * FROM articles WHERE ID = ?');  //On prend toute la ligne de cette article
-                                                                               
+       // $requete = $bdd ->prepare('SELECT * FROM articles WHERE ID = ?');  //On prend toute la ligne de cette article
+    $requete = $bdd ->prepare('SELECT * FROM articles INNER JOIN membres ON membres.ID = articles.ID_auteur WHERE articles.ID = ? ORDER BY date_creation DESC LIMIT 5');
+            // On                                                      
+    
         //$requete->bindValue(':id', $_GET['articleID'], PDO::PARAM_INT); 
 
       $requete->execute(array($_GET['articleID']));
@@ -42,7 +44,7 @@ if (isset($_GET['articleID']))  // Si on est arrivé ici en cliquant sur un arti
 
 <article class="blog">  
         <?php   // On affiche l'article comme sur la page d'accueil
-        echo "<h5>Ecrit par : ", $donnees['auteur'] , "</h5>";
+        echo "<h5>Ecrit par : ", $donnees['pseudo'] , "</h5>";
         echo "<h4 class=\"blog\">", $donnees['title'] , "</h4>";
         echo "<p class=\"blog\">", nl2br($donnees['content']), "</p>";
 
@@ -96,9 +98,13 @@ else
         
             $_POST['content'] = htmlspecialchars($_POST['content']);
         
-            $requete_2 = $bdd ->prepare('INSERT INTO commentaires(Auteur, ID_article, Content, date_commentaire) VALUES (?, ?, ?, NOW() ) ');  
+
+            // On oublie le nom d'auteur qui pose beaucoup de problèmes (en cas de changement de pseudo)
+            // Et on passe plutôt par l'ID du membre.
+
+            $requete_2 = $bdd ->prepare('INSERT INTO commentaires(ID_article, ID_auteur, Content, date_commentaire) VALUES (?, ?, ?, NOW() ) ');  
                                                                                             
-            $requete_2 -> execute(array($_SESSION['pseudo'],$_GET['articleID'], $_POST['content'])); // Pas oublier de récupérer l'ID de l'article où se trouve ce commentaire
+            $requete_2 -> execute(array($_GET['articleID'],$_SESSION['id'], $_POST['content'])); // Pas oublier de récupérer l'ID de l'article où se trouve ce commentaire
                     
 
             echo "<p> Votre commentaire a bien été publié!</p>";
@@ -114,14 +120,13 @@ else
 
     // Première utilisation des jointures
 
-     $reponse = $bdd ->prepare('SELECT *, commentaires.Auteur , membres.pseudo , membres.id AS ID_membre FROM commentaires LEFT JOIN membres 
-     ON commentaires.Auteur = membres.pseudo
+     $reponse = $bdd ->prepare('SELECT *, commentaires.ID_auteur , membres.pseudo , membres.ID AS ID_membre FROM commentaires LEFT JOIN membres 
+     ON commentaires.ID_auteur = membres.ID
      WHERE ID_article = ? ORDER BY date_commentaire DESC LIMIT 0,10');    
-                                                                // WHERE PUIIIIIS ORDER BY, PAS L'INVERSE ! ! ! ! !
-
-    // dans le SELECT on peut mettre : DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM billets ORDER BY date_creation
-    // Genre : SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM ....
-         // Ainsi on récupère une variable date_creation_fr qui permet d'avoir un format de date personnalisée 
+     
+     // On utilise les 2 tables pour pouvoir associer l'ID du membre à son pseudo et donc son image
+     // On utilise donc la table commentaire pour avoir le commentaire et la table membres pour ses informations
+     // commentaires.ID_auteur = membres.ID
 
     $reponse -> execute(array($_GET['articleID']));
 
@@ -132,17 +137,17 @@ while ($donnees_2 = $reponse->fetch())
     <article class="blog">
         <?php
                    
-    $image_profil = 'avatars/'.$donnees_2['ID_membre'].'.png';
+    $image_profil = 'avatars/'.$donnees_2['ID_membre'].'.png'; // On utilise l'ID du membre
     if (file_exists($image_profil)) 
     {
-        echo "<img class=\"imageprofil_commentaire\" src='avatars/",$donnees_2['ID_membre'],".png'>";
+        echo "<img class=\"imageprofil_commentaire\" src='avatars/",$donnees_2['ID_membre'],".png'>"; // On utilise l'ID du membre
     } 
     else 
     {
         echo "<p class=\"alignR\"> |X| &emsp; </p>";
     } 
         echo "<p>", $donnees_2['date_commentaire'],"</p>";
-        echo "<p class=\"gras\">", $donnees_2['Auteur'], "</p>";
+        echo "<p class=\"gras\">", $donnees_2['pseudo'], "</p>";
         echo "<p>", nl2br($donnees_2['Content']),"</p>";
 
         // LES MAJUSCULES COMPTENT dans la récupération des données de la BDD

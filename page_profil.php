@@ -181,7 +181,7 @@ else
 
 
 
-       <!--------------- Partie dédié au changement de Mot De Passe --------------------->
+       <!--------------- Partie dédié au changement de Pseudo --------------------->
        <?php   
 if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
 {
@@ -210,31 +210,41 @@ if (isset($_SESSION['id']) && isset($_SESSION['pseudo']))
     <?php
     }
     
-    if(isset($_POST['new_pseudo']) && isset($_POST['new_pseudo_2']) )
+    
+    if(isset($_POST['new_pseudo']) && isset($_POST['new_pseudo_2']) ) // New Pseudo saisie
     {
-        if ($_POST['new_pseudo'] != $_POST['new_pseudo_2'] )
+        
+        $_POST['new_pseudo'] = strtoupper(htmlspecialchars($_POST['new_pseudo'])); // Anti faille XSS ++ le Pseudo est toujours écrit en MAJUSCULE
+        // Ce qui évite des problèmes de logins, exemple : Florian != floRIAN != FLORIAN, là, tout est identique grace au strtoupper
+        $_POST['new_pseudo_2'] = strtoupper(htmlspecialchars($_POST['new_pseudo_2']));
+
+        if ($_POST['new_pseudo'] != $_POST['new_pseudo_2'] ) // Incorrect car mal saisie
         {
             echo "<p class=\"red\">Votre nouveau pseudo saisie est différent entre les 2 champs, réessayez de nouveau.</p>";
         }
-        else if(strlen($_POST['new_pseudo']) < 5)
+        else if(strlen($_POST['new_pseudo']) < 5) // Trop petit
         {
             echo "<p>Votre pseudo est trop petit, il doit comprendre minimum 5 caractères.</p>";
         }
-        else
+        else if ($_POST['new_pseudo'] == $resultat['pseudo']) // Déja pris (on a bien vérifié 2 pseudos tous les 2 en majuscules, celui de la BDD l'est de base).
+        {
+            echo "<p>Ce pseudo appartient déjà à quelqu'un, saisissez-en un autre.</p>";
+        }
+        else // Pas pris, >= 5 carac, bien écris, présents
         {
 
-            // VERIFIER QUE LE NOUVEAU PSEUDO NE SOIT PAS PRIS PAR QUELQU'UN ! SINON GROS PROBLEME : #CLaireD = Michel
-            // LIER LES MESSAGES ENVOYER A UN UTILISATEUR (ID) et pas pseudo car il peut modifier son pseudo ! ! !
+            // LIER LES "MESSAGES ENVOYER" A UN UTILISATEUR (ID) et pas pseudo car il peut modifier son pseudo ! ! !
+            // Mettre à jour le pseudo VIA l'ID de l'utilisateur
 
-
-            $_POST['new_pseudo'] = strtoupper(htmlspecialchars($_POST['new_pseudo'])); // Anti faille XSS ++ le Pseudo est toujours écrit en MAJUSCULE
-                                    // Ce qui évite des problèmes de logins, exemple : Florian != floRIAN != FLORIAN, là, tout est identique grace au strtoupper
 
         $requete_pseudo = $bdd ->prepare('UPDATE membres SET pseudo = ? WHERE ID = ?  ');  
                                               
-        
         $requete_pseudo -> execute(array($_POST['new_pseudo'],$resultat['ID']));   
         echo "<p id=\"IDtest\">Votre nouveau pseudo a bien été enregistré!";
+
+        // Mettre aussi à jour son nom d'auteur dans la table des articles
+
+        // Plus nécessaire car seul l'ID est enregisté, et grace à l'ID on retrouvera son pseudo (aka son nom d'auteur)
         
         $_SESSION['id'] = $resultat['ID'];
         $_SESSION['pseudo'] = $_POST['new_pseudo'];
