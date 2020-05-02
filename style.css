@@ -400,3 +400,8 @@ p.blog {
     background-color: rgba(67, 28, 197, 0.714);
     color: black;
 }
+
+p.page_nav {
+    border: 1px solid white;
+    background-color: beige;
+}
