@@ -14,6 +14,7 @@ include("menu.php");
 
 
 <section class="first">
+
 <?php  // Afficher des pages pour naviguer entre les articles : 5 articles par page
 
 // Compter le nombre d'articles
@@ -33,8 +34,7 @@ $nb_pages = floor( 1 + $nb_articles / 5);
 // Le "+1" permet d'en placer une obligatoire, et ensuite, si le nb_articles est > a 5, on en rajoute 1, >10 on en rajoute 2, etc...
 
 echo "<p>Nombres de Pages: ",$nb_pages, "<br/>Nombres d'articles: ", $nb_articles,"</p>";
-
-echo "<span class=\"page_nav\">";
+echo "<div class=\"blog\">";
 for ($page = 1 ; $page <= $nb_pages ; $page++) 
 {
     ?>
@@ -44,6 +44,7 @@ for ($page = 1 ; $page <= $nb_pages ; $page++)
 ?>
 
 </span> <br /><br />
+</div>
 <?php
   //  $reponse = $bdd ->query('SELECT * FROM articles ORDER BY date_creation DESC LIMIT 5');    
     
@@ -64,7 +65,7 @@ for ($page = 1 ; $page <= $nb_pages ; $page++)
         }
 
         $reponse = $bdd ->query('SELECT *, articles.ID AS ID_article FROM articles INNER JOIN membres ON membres.ID = articles.ID_auteur 
-        ORDER BY date_creation DESC LIMIT ' . $numero_article . ',5');
+        ORDER BY date_creation DESC LIMIT ' . $numero_article . ',5'); // Si le numéro de page est présent, alors on commence au numéro de l'article (5* (numero_page - 1))
         
         // IL EST HYPER IMPORTANT DE METTRE DES "." dans le code SQL pour concaténer des éléments!
         // Contrairement aux fonctions PHP, la virgule ne fonctionne pas ici!
@@ -76,7 +77,7 @@ for ($page = 1 ; $page <= $nb_pages ; $page++)
 else
 {
      $reponse = $bdd ->query('SELECT *, articles.ID AS ID_article FROM articles INNER JOIN membres ON membres.ID = articles.ID_auteur ORDER BY date_creation DESC LIMIT 0,5');
-}
+}                                                       // Si pas de page sélectionner, on commence par défaut au 1er article (page 1 en gros)
 
 while ($donnees = $reponse->fetch()) 
 { 

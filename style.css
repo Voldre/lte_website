@@ -51,7 +51,7 @@ h4 {
 }
 
 h5 {
-    color: rgba(0, 255, 30, 0.524);
+    color: rgba(0, 255, 30, 0.537);
     font-size: 17px;
     text-align: center;
 }
@@ -401,7 +401,6 @@ p.blog {
     color: black;
 }
 
-p.page_nav {
-    border: 1px solid white;
-    background-color: beige;
+.blog a {
+    font-size: 23px;
 }
