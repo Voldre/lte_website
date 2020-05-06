@@ -33,7 +33,7 @@ if (isset($_GET['articleID']))  // Si on est arrivé ici en cliquant sur un arti
 {
     $_GET['articleID'] = (int) htmlspecialchars($_GET['articleID']); // Anti faille XSS, + on vérifie que c'est un nombre (un entier), sinon on le met en nombre (=0)
 
-    echo "<p>Vous êtes sur la page de l'article  " , $_GET['articleID'], "  pour changer d'article, changer le numéro dans l'URL.</p>";
+    echo "<p>Vous êtes sur la page de l'article  " , $_GET['articleID'], "  pour changez d'article, changer le numéro dans l'URL.</p>";
 
        // $requete = $bdd ->prepare('SELECT * FROM articles WHERE ID = ?');  //On prend toute la ligne de cette article
     $requete = $bdd ->prepare('SELECT * FROM articles INNER JOIN membres ON membres.ID = articles.ID_auteur WHERE articles.ID = ? ORDER BY date_creation DESC LIMIT 5');

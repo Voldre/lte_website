@@ -29,7 +29,7 @@ while ($donnees_articles = $reponse_articles->fetch())
 }
 $reponse_articles->closeCursor();
 
-$nb_pages = floor( 1 + $nb_articles / 5);
+$nb_pages = floor( 1 + $nb_articles / 5); // Attention, si 5 articles alors 1+1 = 2! Mais la page 2 sera vide ! ! ! (pas grave grave, mais bête)
 // floor permet de faire un arrondis inférieur, donc si on a 2,6 pages, on a 2 pages
 // Le "+1" permet d'en placer une obligatoire, et ensuite, si le nb_articles est > a 5, on en rajoute 1, >10 on en rajoute 2, etc...
 
