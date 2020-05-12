@@ -93,7 +93,7 @@ else
 <?php
 if (isset($_POST['content']) && isset($_POST['pseudo']))
 {
-    if (strlen($_POST['content']) <= 5 || strlen($_POST['pseudo']) <= 3)
+    if (strlen($_POST['content']) <= 10 || strlen($_POST['pseudo']) <= 3)
     { 
         echo "<p>Votre pseudo ou votre commentaire n'est pas valide.</p>";
             

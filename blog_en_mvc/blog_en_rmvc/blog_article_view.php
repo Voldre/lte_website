@@ -13,8 +13,8 @@ ob_start();
 
         if ($request_number == 0) 
         {     
-            echo "<p class=\"red\"> Cet article n'existe pas!</p>";
-            exit(); 
+            throw new Exception("Cet article n'existe pas!");
+            //exit();   No need to exit(), because we have a try/catch block
         }
 
         while ($data_article = $request->fetch()) 
@@ -41,12 +41,12 @@ ob_start();
     // Partie commentaire
     ?>
     <p>Vous pouvez commenter cet article:</p>
-    <form method="post">
+
+                     <!-- Go to the addcomment action -->
+    <form method="post" action="index.php?action=addComment&amp;articleID=<?= $_GET['articleID'] ?>" >
     <p><label>Pseudo :<input type="text" name="pseudo" /></label></p>
 
-    <p>Commentaire :<textarea name="content" rows="3" cols="50">
-
-    </textarea></p>
+    <p>Commentaire :<textarea name="content" rows="3" cols="50"></textarea></p>
 
     <input type="submit" value="Envoyer" />
     </form>
@@ -63,6 +63,9 @@ ob_start();
             echo "<p>", $data_comments['date_commentaire'],"</p>";
             echo "<p class=\"gras\">", $data_comments['Auteur'], "</p>";
             echo "<p>", nl2br($data_comments['Content']),"</p>";
+
+            // To edit a comment (new function)
+            echo "<p><a href=\"index.php?action=modifComment&articleID=".$_GET['articleID']."&commentID=".$data_comments['ID'].'">Modifier</a></p>';
             ?>
         </article>
         <br/>

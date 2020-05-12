@@ -2,17 +2,8 @@
 
 function DB_connect()
 {
-    try {   
-
-        $db = new PDO('mysql:host=localhost;dbname=test', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)); 
-        return $db; // Don't forget to return the db variable
-
-        }
-        catch (Exception $e)
-        {
-                die('Erreur : ' . $e->getMessage());
-        }  
-
+    $db = new PDO('mysql:host=localhost;dbname=test', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)); 
+    return $db; // Don't forget to return the db variable
 }
 
 // Home model

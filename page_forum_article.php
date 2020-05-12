@@ -87,9 +87,9 @@ else
     <?php
     if (isset($_POST['content']))
     {
-        if (strlen($_POST['content']) <= 5)
+        if (strlen($_POST['content']) < 10)
         { 
-            echo "<p>Votre commentaire n'est pas valide.</p>";
+            echo "<p>Votre commentaire est trop court (10 caractères minimums).</p>";
                 
         }
         else

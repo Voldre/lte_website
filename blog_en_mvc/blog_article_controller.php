@@ -9,7 +9,7 @@ if (isset($_GET['articleID']))  // Si on est arrivé ici en cliquant sur un arti
 {
     $articleID = (int) htmlspecialchars($_GET['articleID']); // This line must be in the controller, because we must work on the DB 
 
-    $request = DB_show_articles($articleID); // The request is execute only if $_GET['articleID'] exist
+    $request = DB_show_article($articleID); // The request is execute only if $_GET['articleID'] exist
     
     $answer_comments = DB_show_comments($articleID);
 
@@ -29,7 +29,7 @@ else
 
 if (isset($_POST['content']) && isset($_POST['pseudo']))
 {
-    if (strlen($_POST['content']) <= 5 || strlen($_POST['pseudo']) <= 3)
+    if (strlen($_POST['content']) <= 10 || strlen($_POST['pseudo']) <= 3)
     { 
         echo "<p>Votre pseudo ou votre commentaire n'est pas valide.</p>";
             
@@ -39,7 +39,7 @@ if (isset($_POST['content']) && isset($_POST['pseudo']))
         $pseudo = htmlspecialchars($_POST['pseudo']);
         $content = htmlspecialchars($_POST['content']);
 
-        DB_insert_comments($pseudo,$articleID,$content);
+        DB_insert_comment($pseudo,$articleID,$content);
 
         echo "<p> Votre commentaire a bien été publié!</p>";   
     }

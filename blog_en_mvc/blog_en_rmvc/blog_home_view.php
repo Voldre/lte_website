@@ -23,7 +23,7 @@ ob_start(); ?>
 
         <article class="blog">
                     
-            <a class="blog" href="blog_article_controller.php?articleID=<?php echo $articleID ; ?>">
+            <a class="blog" href=<?php echo "\"index.php?action=post&articleID=".$articleID."\">"?>
                 
             <?php
                 echo "<h4 class=\"blog\">", $data_answer['title'] , "</h4>";
