@@ -423,7 +423,21 @@ p.blog {
 
 .droite {
     border: 2px red;
-    width: 300px;
+    width: 400px;
     display: inline-block;
     vertical-align: 500px;
+}
+
+.Section_0,
+.Section_1,
+.Section_2,
+.Section_3,
+.Section_4,
+.Section_5 {
+    width: 400px;
+    display: inline-block;
+    border: 2ppx blue;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
 }

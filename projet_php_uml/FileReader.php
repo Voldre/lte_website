@@ -25,7 +25,7 @@ class FileReader extends ReflectionClass // implements Draw
   {
     if (class_exists($tmp_class_name))
     {
-    $this->setContent();
+    //$this->setContent(); // Useless 
     $this->setClass_name($tmp_class_name);
     $this->setReflection();
     $this->setAttributs();
@@ -158,13 +158,15 @@ class FileReader extends ReflectionClass // implements Draw
             {
                 echo ": ";
             }
-            
+            /* SEARCH HOW WORKING IF INSTANCE NEEDS PARAMETERS
+
             if (!$this->isAbstractClass() && $type == "attributs")
             {
                 $var = gettype($element->getValue($this->instance));
                 echo $var."<br/>";
+
             }
-            
+            */
             if ($type == "methodes")
             {
                 if( $element->isFinal() ) { echo "<<leaf>> "; }
@@ -179,6 +181,10 @@ class FileReader extends ReflectionClass // implements Draw
                 }
             echo "):<br/>";
             }
+            else if ($type == "attributs")
+            {
+                echo "<br/>";
+            }
             $element->setAccessible(false); // désactiver l'accès aux attributs (privé et protégé)
 
         }
@@ -190,11 +196,13 @@ class FileReader extends ReflectionClass // implements Draw
     {   
         if($parent = $this->reflection->getParentClass())
         {
-            echo "<br/>La classe parente de".$this->class_name." est :  <strong>", $parent->getName(),"</strong><br/> ";
+            echo "<br/>La classe parente de ".$this->class_name." est :  <strong>", $parent->getName(),"</strong><br/> ";
+            return true; // usable in a condition
         }
         else
         {
-            echo "La classe ".$this->class_name." n'a pas de parent.";
+            echo "<br/>La classe ".$this->class_name." n'a pas de parent.";
+            return false; // usable in a condition
         }
     }
     
@@ -203,21 +211,21 @@ class FileReader extends ReflectionClass // implements Draw
 
         if (!$this->reflection->isAbstract())
         {
-            $class_name = $this->class_name;
-            $objet = new $class_name();
-            $isAbstractClass = false;
+            //$class_name = $this->class_name;
 
+            /* SEARCH HOW WORKING IF INSTANCE NEEDS PARAMETERS
+            $objet = new $this->$class_name();
             $this->instance = $objet;
+            */
 
-            $isAbstractClass = false; // Permet d'afficher les types des attributs!
+            return false; // Permet d'afficher les types des attributs!
             // Si on fait un return sans créer $isAbstractClass, alors on les voient pas!
         }
         else
         {
-          $isAbstractClass = true; // Write name class in Italic
+          return true; // Write name class in Italic
         }
 
-        return $isAbstractClass;
     }
     
     // IMPLETEMENTATION

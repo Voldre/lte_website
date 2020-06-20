@@ -16,17 +16,25 @@
 
 <form method="POST" enctype="multipart/form-data">
 
-<input type="file" name="monfichier"/>
-<input type="submit" value="Envoyer ma classe"/>
+<?php
+
+for ($i = 0; $i < 6; $i++)
+{
+?>
+    <input type="file" name="monfichier<?php echo $i; ?>"/><br/>
+<?php
+}          // création des fichiers "monfichier0.php" etc...
+?>
+    <input type="submit" value="Envoyer ma classe"/>
 </form>
 
-<section class="gauche">
-<?php
-require_once("index1.php");
+
+<section>
+<?php 
+//require_once('index1.php");
+require_once('indexPOO.php');
 ?>
 </section>
-<section class="droite">
-<?php
-require_once("indexPOO.php");
-?>
-</section>
+
+</body>
+</html>
