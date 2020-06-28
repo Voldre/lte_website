@@ -1,11 +1,8 @@
 <?php
 
-require_once("Draw.php");
-
-class FileReader extends ReflectionClass // implements Draw
-{
-    protected   $content,
-                $class_name,
+class FileReader 
+{               //$content //(contient le contenu du fichier)
+    protected   $class_name,
                 $reflection,
                 $attributs,
                 $constants,
@@ -26,6 +23,9 @@ class FileReader extends ReflectionClass // implements Draw
     if (class_exists($tmp_class_name))
     {
     //$this->setContent(); // Useless 
+
+    // Voir comment automatiser ce processus
+
     $this->setClass_name($tmp_class_name);
     $this->setReflection();
     $this->setAttributs();
@@ -42,7 +42,6 @@ class FileReader extends ReflectionClass // implements Draw
 
     // GETTER
 
-    public function content() { return $this->content ;}
     public function class_name() { return $this->class_name ;}
     public function reflection() { return $this->reflection ;}
     public function attributs() { return $this->attributs ;}
@@ -50,13 +49,6 @@ class FileReader extends ReflectionClass // implements Draw
     public function methods() { return $this->methods ;}
 
     // SETTER
-
-    public function setContent()
-    {
-        ob_start();
-        require_once("uploads/tempo.php");
-        $this->content = ob_get_clean();
-    }
 
     public function setClass_name($value)
     {
@@ -85,9 +77,9 @@ class FileReader extends ReflectionClass // implements Draw
     }
     // Fonctionnalité
 
-    public function Draw_UML_Format()
+    public function Draw_UML_Format($allow = false)
     {
-        $this->isChild();
+        $this->isChild($allow);
 
         $isAbstractClass = $this->isAbstractClass();
         $this->DrawSquareName($this->class_name, $isAbstractClass);
@@ -99,21 +91,39 @@ class FileReader extends ReflectionClass // implements Draw
             {
                 echo "+".$element.": const = ". $value."<br/>";
             }
-            $contentTable2 = ob_get_clean();
-        $this->DrawSquare($contentTable2);
+            $contentTable = ob_get_clean();
+        $this->DrawSquare($contentTable);
 
         ob_start();
         $this->UML_Format("methodes");
-        $contentTable3 = ob_get_clean();
-        $this->DrawSquare($contentTable3);
+        $contentTable_2 = ob_get_clean();
+        $this->DrawSquare($contentTable_2);
         
     }
 
 
+        // TEST POUR V2 avec tous les aspects techniques !
+        // Come from :
+        // https://stackoverflow.com/questions/36267390/how-to-get-parameter-type-in-reflected-class-method-php-5-x/36267781#36267781?newreg=810270cf45bc4bfaa86df3f482d0ce1f
+        // And https://www.php.net/manual/fr/reflectionparameter.gettype.php
+        public function getParameterType(ReflectionParameter $parameter)
+        {
+            $export = ReflectionParameter::export(
+                array(
+                    $parameter->getDeclaringClass()->name,
+                    $parameter->getDeclaringFunction()->name
+                ),
+                $parameter->name,
+                true
+            );
+            return preg_match('/[>] ([A-z]+) /', $export, $matches)
+                ? $matches[1] : null;
+        }
 
 
     public function UML_Format($type)
     {
+
         if ($type == "attributs")
         {
             $list = $this->attributs;
@@ -149,70 +159,87 @@ class FileReader extends ReflectionClass // implements Draw
             { 
                 if ($element->isAbstract()){ echo "<span class=\"italic\">";} 
             }
-            echo $element->getName();
-            if($type == "methodes")
-            {
-                echo "(";
-            }
-            else
-            {
-                echo ": ";
-            }
-            /* SEARCH HOW WORKING IF INSTANCE NEEDS PARAMETERS
 
+            echo $element->getName();
+
+            /* SEARCH HOW WORKING IF INSTANCE NEEDS PARAMETERS
             if (!$this->isAbstractClass() && $type == "attributs")
             {
                 $var = gettype($element->getValue($this->instance));
                 echo $var."<br/>";
-
             }
             */
             if ($type == "methodes")
             {
+                echo "(";
+
                 if( $element->isFinal() ) { echo "<<leaf>> "; }
 
                 $params = $element->getParameters();
                 foreach ($params as $param) 
                 {
                     //$param is an instance of ReflectionParameter
+                    //$param->getType();
                     //echo $param->getName();
                     //echo $param->isOptional();
-                    echo $param->getName().": "."type "; //$param->getType();
+                    //$object = $param->getClass();
+
+                                        // Because we are above PHP 7
+                    echo $param->getName().": ".$this->getParameterType($param); 
                 }
             echo "):<br/>";
             }
             else if ($type == "attributs")
             {
-                echo "<br/>";
+                echo ":"."<br/>";
             }
             $element->setAccessible(false); // désactiver l'accès aux attributs (privé et protégé)
-
-        }
-
-       
+        }      
     }
 
-    public function isChild()
+    public function isChild($allow)
     {   
         if($parent = $this->reflection->getParentClass())
         {
-            echo "<br/>La classe parente de ".$this->class_name." est :  <strong>", $parent->getName(),"</strong><br/> ";
+            if($allow)
+            { echo "<br/>La classe parente de ".$this->class_name." est :  <strong>", $parent->getName(),"</strong><br/> "; }
             return true; // usable in a condition
         }
         else
         {
-            echo "<br/>La classe ".$this->class_name." n'a pas de parent.";
+            if($allow)
+            { echo "<br/>La classe ".$this->class_name." n'a pas de parent."; }
             return false; // usable in a condition
         }
     }
+
+
+            // AJOUT POUR LA FONCTION V2
+
+    public function isChildOf(FileReader $parent) // On envoie forcément un objet FileReader
+    {   
+        if ($realParent = $this->reflection->getParentClass()) // Si un parent existe vraiment
+        {
+           //class_name() utilisable car $parent est un objet de FileReader
+            if($parent->class_name() == $realParent->getName() ) // On compare son nom a celui envoyé
+            {
+                return true;
+            }
+            else    // Si faux, alors pas le bon
+            {
+                return false;
+            }
+        }   // Sinon, faux car pas de parent
+        else { return false; }
+    }
+
+
     
     public function isAbstractClass()
     {
 
         if (!$this->reflection->isAbstract())
         {
-            //$class_name = $this->class_name;
-
             /* SEARCH HOW WORKING IF INSTANCE NEEDS PARAMETERS
             $objet = new $this->$class_name();
             $this->instance = $objet;

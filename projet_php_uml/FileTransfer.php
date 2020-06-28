@@ -1,7 +1,5 @@
 <?php
 
-require_once("Draw.php");
-
 class FileTransfer
 {
     protected   $file,
@@ -69,11 +67,14 @@ class FileTransfer
     
     // Fonctionnalité
 
-    public function SaveFile()
+    public function SaveFile($allow = false)
     {
         if (in_array ($this->extension, array(self::EXTENSIONS_ALLOW) ) ) 
         {
-            echo "Le fichier a bien été sauvegardé sous le nom : <strong>tempo_".$this->name.".php</strong> !";
+            if ($allow)
+            {
+                echo "Le fichier a bien été sauvegardé sous le nom : <strong>tempo_".$this->name.".php</strong> !";
+            }
             move_uploaded_file($this->tmp_name, 'uploads/' . basename("tempo_".$this->name.".php")); // Renommé
         }
         else

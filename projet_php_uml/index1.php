@@ -1,3 +1,131 @@
+
+<?php
+
+  echo "<h2> Convertisseur de classe PHP en UML :</h2>";
+
+
+// PROCHAINE ETAPE : Inclure un/des fichiers, et être capable de les lires pour utiliser l'api de reflexivité
+// en gros, on laisse l'utilisateur importer ses classes
+
+    require_once("Personnage.php");
+    require_once("Magicien.php");
+
+$classePerso = new ReflectionClass('Personnage');
+$classeMagicien = new ReflectionClass('Magicien');
+$objet = new Magicien(['nom' => 'vyk12', 'type' => 'magicien']);
+
+
+if($parent = $classeMagicien->getParentClass())
+{
+    echo "<br/>La classe parente de magicien est :  <strong>", $parent->getName(),"</strong><br/> ";
+}
+else
+{
+    echo "La classe magicien n'a pas de parent.";
+}
+
+
+echo "<div class=\"square\"><h5>".$classeMagicien->getName()."</h5></div>";
+
+echo "<div class=\"square\">";
+
+foreach ($classeMagicien->getProperties() as $attribut)
+{
+    $attribut->setAccessible(true);
+
+  if ($attribut->isPublic())
+  {
+    echo '+';
+  }
+  elseif ($attribut->isProtected())
+  {
+    echo '#';
+  }
+  else
+  {
+    echo '-';
+  }
+  
+
+  if ($attribut->isStatic())
+  {
+      echo "<span class=\"underline\">";
+  }
+  echo $attribut->getName().": ";
+
+  $var = gettype($attribut->getValue($objet));
+
+  echo $var."<br/>";
+
+  $attribut->setAccessible(false); // désactiver l'accès aux attributs (privé et protégé)
+}
+
+
+foreach ($classeMagicien->getConstants() as $CONSTANT => $value)
+{   
+  echo "+".$CONSTANT.": const = ". $value."<br/>";
+}
+
+
+
+echo "</div> <div class=\"square\">";
+
+foreach ($classeMagicien->getMethods() as $method)
+{
+
+    $method->setAccessible(true);
+
+  if ($method->isPublic())
+  {
+    echo '+';
+  }
+  elseif ($method->isProtected())
+  {
+    echo '#';
+  }
+  else
+  {
+    echo '-';
+  }
+  
+  if ($method->isStatic())
+  {
+      echo "<span class=\"underline\">";
+  }
+  if ($method->isAbstract())
+  {
+      echo "<span class=\"italic\">";
+  }
+  if ($method->isFinal())
+  {
+      echo "<<leaf>> ";
+  }
+  echo $method->getName()."(";
+
+$params = $method->getParameters();
+foreach ($params as $param) {
+    //$param is an instance of ReflectionParameter
+
+    //echo $param->getName();
+    //echo $param->isOptional();
+    echo $param->getName().":"."type"; //$param->getType();
+}
+
+  echo "):";
+
+
+  //echo $method->getReturnType();
+  echo "<br/>";
+
+  if ($method->isConstructor())
+  {
+      echo "    ---- Je suis le constructeur !<br/>";
+  }
+}
+
+
+?>
+
 <!--
 < ?php
 if (isset($_FILES['monfichier']) AND $_FILES['monfichier']['error'] == 0)
@@ -222,142 +350,6 @@ else
 
 -->
 
-
-
-
-
-
-
-
-
-
-
-<?php
-
-  echo "<h2> Convertisseur de classe PHP en UML :</h2>";
-
-
-// PROCHAINE ETAPE : Inclure un/des fichiers, et être capable de les lires pour utiliser l'api de reflexivité
-// en gros, on laisse l'utilisateur importer ses classes
-
-    require_once("Personnage.php");
-    require_once("Magicien.php");
-
-$classePerso = new ReflectionClass('Personnage');
-$classeMagicien = new ReflectionClass('Magicien');
-$objet = new Magicien(['nom' => 'vyk12', 'type' => 'magicien']);
-
-
-if($parent = $classeMagicien->getParentClass())
-{
-    echo "<br/>La classe parente de magicien est :  <strong>", $parent->getName(),"</strong><br/> ";
-}
-else
-{
-    echo "La classe magicien n'a pas de parent.";
-}
-
-
-echo "<div class=\"square\"><h5>".$classeMagicien->getName()."</h5></div>";
-
-echo "<div class=\"square\">";
-
-foreach ($classeMagicien->getProperties() as $attribut)
-{
-    $attribut->setAccessible(true);
-
-  if ($attribut->isPublic())
-  {
-    echo '+';
-  }
-  elseif ($attribut->isProtected())
-  {
-    echo '#';
-  }
-  else
-  {
-    echo '-';
-  }
-  
-
-  if ($attribut->isStatic())
-  {
-      echo "<span class=\"underline\">";
-  }
-  echo $attribut->getName().": ";
-
-  $var = gettype($attribut->getValue($objet));
-
-  echo $var."<br/>";
-
-  $attribut->setAccessible(false); // désactiver l'accès aux attributs (privé et protégé)
-}
-
-
-foreach ($classeMagicien->getConstants() as $CONSTANT => $value)
-{   
-  echo "+".$CONSTANT.": const = ". $value."<br/>";
-}
-
-
-
-echo "</div> <div class=\"square\">";
-
-foreach ($classeMagicien->getMethods() as $method)
-{
-
-    $method->setAccessible(true);
-
-  if ($method->isPublic())
-  {
-    echo '+';
-  }
-  elseif ($method->isProtected())
-  {
-    echo '#';
-  }
-  else
-  {
-    echo '-';
-  }
-  
-  if ($method->isStatic())
-  {
-      echo "<span class=\"underline\">";
-  }
-  if ($method->isAbstract())
-  {
-      echo "<span class=\"italic\">";
-  }
-  if ($method->isFinal())
-  {
-      echo "<<leaf>> ";
-  }
-  echo $method->getName()."(";
-
-$params = $method->getParameters();
-foreach ($params as $param) {
-    //$param is an instance of ReflectionParameter
-
-    //echo $param->getName();
-    //echo $param->isOptional();
-    echo $param->getName().":"."type"; //$param->getType();
-}
-
-  echo "):";
-
-
-  //echo $method->getReturnType();
-  echo "<br/>";
-
-  if ($method->isConstructor())
-  {
-      echo "    ---- Je suis le constructeur !<br/>";
-  }
-}
-
-
-?>
 
 </body>
 </html>

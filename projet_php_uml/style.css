@@ -1,14 +1,15 @@
-/*
+    /*
     Mon fichier style.css : Valentin Dubuc
 */
-
-*
-/* sélecteur universelle, pour par exemple mettre une police identique partout*/
-
-{
-    font-family: Verdana, Georgia, serif;
+    
+    *
+    /* sélecteur universelle, pour par exemple mettre une police identique partout*/
+    
+    {
+        font-family: Verdana, Georgia, serif;
+        /*color: white;
     /* SI l'internaute n'a pas la 1, il prend la 2, s'il ne l'a pas non plus, la troisième : serif (l'universelle) */
-    /* Police personnalisée :
+        /* Police personnalisée :
 @font-face{
     font-family:'MaSuperPolice';
     src:url('MaSuperPolice.eot')format('eot'),
@@ -16,428 +17,463 @@
     url('MaSuperPolice.ttf')format('truetype')
     ,url('MaSuperPolice.svg')format('svg');}
 */
-}
-
-body {
-    /* Il est important de mettre le background dans le body et pas ailleurs */
-    background-color: white;
-    /* background-attachment:fixed;/* Le fond restera fixe */
-    background-repeat: no-repeat;
-    /* empêche que l'image se répète sur les côtés si elle est trop petite */
-    background-position: center;
-    /* centre l'image au lieu de la mettre en Top left */
-    /* équivalent à :  background: url("images/background_site.png") scroll no-repeat center;  */
-    /* on peut déclarer plusieurs background-image, il suffit d'espacer les déclarations par des virgules, 
+    }
+    
+    body {
+        /* Il est important de mettre le background dans le body et pas ailleurs */
+        background-color: grey;
+        /* background-attachment:fixed;/* Le fond restera fixe */
+        background-repeat: no-repeat;
+        /* empêche que l'image se répète sur les côtés si elle est trop petite */
+        background-position: center;
+        /* centre l'image au lieu de la mettre en Top left */
+        /* équivalent à :  background: url("images/background_site.png") scroll no-repeat center;  */
+        /* on peut déclarer plusieurs background-image, il suffit d'espacer les déclarations par des virgules, 
    les images se superposent donc l'ordre à une importance */
-    background-size: cover;
-    /* Prend la totalité de la taille de l'écran */
-    padding-right: 3%;
-    padding-bottom: 5%;
-    /* Marge interne */
-    min-width: 900px;
-    /* ne peut pas descendre sous 600px*/
-}
-
-h3 {
-    color: rgb(255, 166, 0);
-    font-size: 26px;
-    text-align: left;
-}
-
-h4 {
-    color: gold;
-    font-size: 22px;
-    text-align: left;
-}
-
-h5,
-legend {
-    color: rgba(255, 0, 0, 0.769);
-    font-size: 17px;
-    text-align: center;
-}
-
-button {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-p,
-li {
-    color: rgb(255, 166, 0);
-    font-size: 14px;
-    text-align: justify;
-}
-
-li {
-    margin-top: 1.5%;
-    /* espacement entre chaque tiret*/
-}
-
-.test {
-    color: rgb(10, 10, 10);
-}
-
-p.test {
-    /* équivalent à p[class="test"]   */
-    /* Uniquement pour toutes les balises class:"test" se trouvant dans un <p> */
-    /* la configuration p.test dans une balise <p> aura la priorité sur .test, car elle est plus précise, donc la color de .test sera "recouverte" */
-    color: rgb(255, 210, 0);
-    font-style: italic;
-}
-
-.red {
-    color: red;
-    text-align: left;
-    font-weight: bold;
-}
-
-article.download p {
-    /* les textes <p> dans article class="download" sont allignés */
-    text-align: center;
-    color: white;
-}
-
-.one:hover {
-    border-radius: 6px;
-    /* arrondis */
-    border: 1px solid;
-    border-width: 1px;
-    border-color: rgba(195, 126, 195, 0.632);
-    background-color: rgba(250, 187, 233, 0.36);
-}
-
-.two:hover {
-    border-radius: 13px;
-    /* arrondis */
-    border: 1px solid;
-    border-width: 1px;
-    border-color: rgba(55, 30, 136, 0.68);
-    background-color: rgba(91, 86, 228, 0.394);
-}
-
-.three:hover {
-    border-radius: 13px;
-    /* arrondis */
-    border: 1px solid;
-    border-width: 1px;
-    border-color: rgba(204, 120, 31, 0.626);
-    background-color: rgba(243, 171, 36, 0.319);
-}
-
-
-/*
+        background-size: cover;
+        /* Prend la totalité de la taille de l'écran */
+        padding-right: 3%;
+        padding-bottom: 5%;
+        /* Marge interne */
+        min-width: 900px;
+        /* ne peut pas descendre sous 600px*/
+    }
+    
+    h3 {
+        color: rgb(255, 166, 0);
+        font-size: 26px;
+        text-align: left;
+    }
+    
+    h4 {
+        color: gold;
+        font-size: 22px;
+        text-align: left;
+    }
+    
+    h5,
+    legend {
+        color: rgba(255, 0, 0, 0.769);
+        font-size: 17px;
+        text-align: center;
+    }
+    
+    button {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    p,
+    li {
+        color: rgb(255, 166, 0);
+        font-size: 14px;
+        text-align: justify;
+    }
+    
+    li {
+        margin-top: 1.5%;
+        /* espacement entre chaque tiret*/
+    }
+    
+    .test {
+        color: rgb(10, 10, 10);
+    }
+    
+    p.test {
+        /* équivalent à p[class="test"]   */
+        /* Uniquement pour toutes les balises class:"test" se trouvant dans un <p> */
+        /* la configuration p.test dans une balise <p> aura la priorité sur .test, car elle est plus précise, donc la color de .test sera "recouverte" */
+        color: rgb(255, 210, 0);
+        font-style: italic;
+    }
+    
+    .red {
+        color: red;
+        text-align: left;
+        font-weight: bold;
+    }
+    
+    article.download p {
+        /* les textes <p> dans article class="download" sont allignés */
+        text-align: center;
+        color: white;
+    }
+    
+    .one:hover {
+        border-radius: 6px;
+        /* arrondis */
+        border: 1px solid;
+        border-width: 1px;
+        border-color: rgba(195, 126, 195, 0.632);
+        background-color: rgba(250, 187, 233, 0.36);
+    }
+    
+    .two:hover {
+        border-radius: 13px;
+        /* arrondis */
+        border: 1px solid;
+        border-width: 1px;
+        border-color: rgba(55, 30, 136, 0.68);
+        background-color: rgba(91, 86, 228, 0.394);
+    }
+    
+    .three:hover {
+        border-radius: 13px;
+        /* arrondis */
+        border: 1px solid;
+        border-width: 1px;
+        border-color: rgba(204, 120, 31, 0.626);
+        background-color: rgba(243, 171, 36, 0.319);
+    }
+    /*
 a[title*="ici"] {
     /* si le titre d'une balise <a> CONTIENT "ici" */
-
-
-/*
+    /*
 }
 */
-
-
-/*
+    /*
 a[title="ici"] {
     /* si le titre d'unbe balsie <a> VAUT EXACTEMENT "ici" */
-
-
-/*
+    /*
 } */
-
-.souligne,
-.underline {
-    text-decoration: underline;
-}
-
-.gras {
-    font-weight: bold;
-}
-
-.flottantG {
-    float: left;
-}
-
-.alignR {
-    text-align: right;
-}
-
-.imageprofil {
-    float: right;
-    width: 220px;
-    height: 280px;
-}
-
-.imageprofil_commentaire {
-    float: right;
-    width: 80px;
-    height: 100px;
-    border: 3px solid rgba(0, 0, 0, 0.1);
-    background-color: rgba(0, 0, 0, 0.1);
-    border-width: 2px;
-    border-radius: 8px;
-}
-
-
-/* utilisation d'un ID plutôt que d'une classe, l'utilité est la même */
-
-p#IDtest {
-    font-weight: bold;
-    color: rgba(0, 106, 255, 150);
-    font-size: 17px;
-}
-
-.diapo {
-    width: 400px;
-    height: 270px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
-/* ------------------------- Placement des différentes parties ------------------------- */
-
-header {
-    color: rgb(248, 149, 0);
-    display: flex;
-    border: 1px dashed rgb(170, 255, 85);
-    height: 160px;
-    /* évite d'avoir un header trop grand (qui dépasse à cause du menu connexion/deconnexion */
-}
-
-header .compteur {
-    color: black;
-    text-align: center;
-    border-radius: 12px;
-    border: 1px solid;
-    border-color: rgb(0, 64, 255);
-    background-color: rgb(0, 64, 255);
-    display: flex;
-    font-size: 42px;
-}
-
-header div {
-    margin-left: 75%;
-}
-
-.creer_la_bdd {
-    background-color: rgb(107, 4, 4);
-    width: 100%;
-}
-
-.bdd_ajoutee {
-    background-color: rgb(23, 136, 6);
-    width: 100%;
-}
-
-p.creer_la_bdd,
-p.bdd_ajoutee {
-    color: white;
-    text-align: center;
-}
-
-header a {
-    text-align: center;
-    margin-left: 2%;
-    border-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 8px;
-}
-
-nav {
-    /*float: left; */
-    display: inline-block;
-    /* permet de mettre en ligne les 2, sinon float left*/
-    vertical-align: top;
-    /* alligne en haut*/
-    margin-top: 8%;
-    /* descend le menu de 10% de l'écran, essayer de voir pour avoir un meilleur outil! */
-    min-width: 200px;
-    /* ne peut pas descendre sous 200px*/
-    border: 1px dashed green;
-    margin-left: -1%;
-    /* recentre le menu */
-}
-
-nav a
-/* sélectionne toutes les balises <a> se trouvant dans un <ul> dans le <nav> */
-
-
-/* le "nav ul a" ne necessite pas le "ul" dans le cas présent */
-
-{
-    /* Joue sur les écris et la bordure */
-    color: white;
-    /* les écris seront tous en blanc */
-    border-radius: 15px;
-    /* arrondis */
-    border: 2px solid;
-    border-width: 16px;
-    border-color: rgb(0, 150, 150);
-    background-color: rgb(0, 150, 150);
-    text-align: center;
-}
-
-nav li
-/* les "li" dans le nav */
-
-{
-    /* Joue sur l'écart des menus et les puces*/
-    font-size: large;
-    font-style: normal;
-    margin-top: 20%;
-    list-style: none;
-    /* retire les puces */
-    text-align: center;
-    min-width: 150px;
-}
-
-section.first {
-    /* margin-left: 17%;
+    
+    .souligne,
+    .underline {
+        text-decoration: underline;
+    }
+    
+    .gras {
+        font-weight: bold;
+    }
+    
+    .flottantG {
+        float: left;
+    }
+    
+    .alignR {
+        text-align: right;
+    }
+    
+    .imageprofil {
+        float: right;
+        width: 220px;
+        height: 280px;
+    }
+    
+    .imageprofil_commentaire {
+        float: right;
+        width: 80px;
+        height: 100px;
+        border: 3px solid rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, 0.1);
+        border-width: 2px;
+        border-radius: 8px;
+    }
+    /* utilisation d'un ID plutôt que d'une classe, l'utilité est la même */
+    
+    p#IDtest {
+        font-weight: bold;
+        color: rgba(0, 106, 255, 150);
+        font-size: 17px;
+    }
+    
+    .diapo {
+        width: 400px;
+        height: 270px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    /* ------------------------- Placement des différentes parties ------------------------- */
+    
+    header {
+        color: rgb(248, 149, 0);
+        display: flex;
+        border: 1px dashed rgb(170, 255, 85);
+        height: 160px;
+        /* évite d'avoir un header trop grand (qui dépasse à cause du menu connexion/deconnexion */
+    }
+    
+    header .compteur {
+        color: black;
+        text-align: center;
+        border-radius: 12px;
+        border: 1px solid;
+        border-color: rgb(0, 64, 255);
+        background-color: rgb(0, 64, 255);
+        display: flex;
+        font-size: 42px;
+    }
+    
+    header div {
+        margin-left: 75%;
+    }
+    
+    .creer_la_bdd {
+        background-color: rgb(107, 4, 4);
+        width: 100%;
+    }
+    
+    .bdd_ajoutee {
+        background-color: rgb(23, 136, 6);
+        width: 100%;
+    }
+    
+    p.creer_la_bdd,
+    p.bdd_ajoutee {
+        color: white;
+        text-align: center;
+    }
+    
+    header a {
+        text-align: center;
+        margin-left: 2%;
+        border-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 8px;
+    }
+    
+    nav {
+        /*float: left; */
+        display: inline-block;
+        /* permet de mettre en ligne les 2, sinon float left*/
+        vertical-align: top;
+        /* alligne en haut*/
+        margin-top: 8%;
+        /* descend le menu de 10% de l'écran, essayer de voir pour avoir un meilleur outil! */
+        min-width: 200px;
+        /* ne peut pas descendre sous 200px*/
+        border: 1px dashed green;
+        margin-left: -1%;
+        /* recentre le menu */
+    }
+    
+    nav a
+    /* sélectionne toutes les balises <a> se trouvant dans un <ul> dans le <nav> */
+    /* le "nav ul a" ne necessite pas le "ul" dans le cas présent */
+    
+    {
+        /* Joue sur les écris et la bordure */
+        color: white;
+        /* les écris seront tous en blanc */
+        border-radius: 15px;
+        /* arrondis */
+        border: 2px solid;
+        border-width: 16px;
+        border-color: rgb(0, 150, 150);
+        background-color: rgb(0, 150, 150);
+        text-align: center;
+    }
+    
+    nav li
+    /* les "li" dans le nav */
+    
+    {
+        /* Joue sur l'écart des menus et les puces*/
+        font-size: large;
+        font-style: normal;
+        margin-top: 20%;
+        list-style: none;
+        /* retire les puces */
+        text-align: center;
+        min-width: 150px;
+    }
+    
+    section.first {
+        /* margin-left: 17%;
     margin-right: 40%;*/
-    display: inline-block;
-    margin-top: 6%;
-    width: 630px;
-    min-width: 250px;
-    /* permet de le placer à 2% plus loin (si float: left en déclaration de nav) */
-    /* display: inline-block;*/
-    border: 1px dashed blue;
-}
-
-#article_1,
-#article_2,
-#article_3,
-#article_4 {
-    border: 1px dashed rgb(245, 201, 58);
-    height: 520px;
-    background-color: rgba(0, 0, 0, 0.3);
-    overflow-y: auto;
-    /* Ajoute un curseur pour scroller le texte qui n'est pas affiché */
-    overflow-x: hidden;
-    /* impossible de scroller de gauche à droite */
-    padding-right: 10px;
-    /* éloigne le texte de 10px à droite du curseur de scroll */
-}
-
-.collapse {
-    display: none;
-}
-
-section.second {
-    /*margin-left: 65%;*/
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 9%;
-    width: 500px;
-    min-width: 225px;
-    border: 1px dashed red;
-    padding-left: 1.5%;
-    /* permet de créer une marge interne entre les 2 premières sections */
-}
-
-section.third {
-    margin-left: 23%;
-    margin-right: 20%;
-    width: 700px;
-    min-width: 300px;
-    /* display: inline-block;*/
-    border: 1px dashed rgb(255, 255, 255);
-    margin-top: 1%;
-}
-
-section.third p {
-    color: rgb(200, 200, 200);
-    /* équivalent à color : white*/
-    text-align: center;
-}
-
-footer {
-    border: 1px dashed rgb(170, 255, 85);
-    background-color: rgba(0, 0, 0, 0.5);
-    margin-left: 16%;
-    margin-right: 20%;
-}
-
-footer p {
-    color: rgb(220, 220, 200);
-    /* équivalent à color : white*/
-    text-align: center;
-}
-
-aside {
-    float: right;
-    width: 260px;
-    /*border: 1px dashed rgb(220, 220, 200);*/
-    background-color: rgba(0, 0, 0, 0.8)
-}
-
-aside img {
-    padding-right: 5%;
-    padding-left: 3%;
-    padding-top: 3%;
-}
-
-
-/* ---------- Partie CSS dédier aux "blogs" --------- */
-
-.blog {
-    text-align: center;
-}
-
-article.blog {
-    margin-left: 25%;
-    margin-right: 25%;
-    border: 1px solid white;
-    border-width: 2px;
-    border-radius: 8px;
-}
-
-h4.blog {
-    background-color: black;
-    color: white;
-}
-
-p.blog {
-    background-color: rgba(67, 28, 197, 0.714);
-    color: black;
-}
-
-.blog a {
-    font-size: 23px;
-}
-
-.square {
-    border: 1px solid black;
-    background-color: rgba(0, 136, 255, 0.347);
-    max-width: 400px;
-}
-
-.italic {
-    font-style: italic;
-}
-
-.gauche {
-    border: 2px blue;
-    width: 300px;
-    display: inline-block;
-}
-
-.droite {
-    border: 2px red;
-    width: 400px;
-    display: inline-block;
-    vertical-align: 500px;
-}
-
-.Section_0,
-.Section_1,
-.Section_2,
-.Section_3,
-.Section_4,
-.Section_5 {
-    width: 400px;
-    display: inline-block;
-    border: 2ppx blue;
-    margin-top: 50px;
-    margin-left: 50px;
-    margin-right: 50px;
-}
+        display: inline-block;
+        margin-top: 6%;
+        width: 630px;
+        min-width: 250px;
+        /* permet de le placer à 2% plus loin (si float: left en déclaration de nav) */
+        /* display: inline-block;*/
+        border: 1px dashed blue;
+    }
+    
+    #article_1,
+    #article_2,
+    #article_3,
+    #article_4 {
+        border: 1px dashed rgb(245, 201, 58);
+        height: 520px;
+        background-color: rgba(0, 0, 0, 0.3);
+        overflow-y: auto;
+        /* Ajoute un curseur pour scroller le texte qui n'est pas affiché */
+        overflow-x: hidden;
+        /* impossible de scroller de gauche à droite */
+        padding-right: 10px;
+        /* éloigne le texte de 10px à droite du curseur de scroll */
+    }
+    
+    .collapse {
+        display: none;
+    }
+    
+    section.second {
+        /*margin-left: 65%;*/
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 9%;
+        width: 500px;
+        min-width: 225px;
+        border: 1px dashed red;
+        padding-left: 1.5%;
+        /* permet de créer une marge interne entre les 2 premières sections */
+    }
+    
+    section.third {
+        margin-left: 23%;
+        margin-right: 20%;
+        width: 700px;
+        min-width: 300px;
+        /* display: inline-block;*/
+        border: 1px dashed rgb(255, 255, 255);
+        margin-top: 1%;
+    }
+    
+    section.third p {
+        color: rgb(200, 200, 200);
+        /* équivalent à color : white*/
+        text-align: center;
+    }
+    
+    footer {
+        border: 1px dashed rgb(170, 255, 85);
+        background-color: rgba(0, 0, 0, 0.5);
+        margin-left: 16%;
+        margin-right: 20%;
+    }
+    
+    footer p {
+        color: rgb(220, 220, 200);
+        /* équivalent à color : white*/
+        text-align: center;
+    }
+    
+    aside {
+        float: right;
+        width: 260px;
+        /*border: 1px dashed rgb(220, 220, 200);*/
+        background-color: rgba(0, 0, 0, 0.8)
+    }
+    
+    aside img {
+        padding-right: 5%;
+        padding-left: 3%;
+        padding-top: 3%;
+    }
+    /* ---------- Partie CSS dédier aux "blogs" --------- */
+    
+    .blog {
+        text-align: center;
+    }
+    
+    article.blog {
+        margin-left: 25%;
+        margin-right: 25%;
+        border: 1px solid white;
+        border-width: 2px;
+        border-radius: 8px;
+    }
+    
+    h4.blog {
+        background-color: black;
+        color: white;
+    }
+    
+    p.blog {
+        background-color: rgba(67, 28, 197, 0.714);
+        color: black;
+    }
+    
+    .blog a {
+        font-size: 23px;
+    }
+    /*  ------------------- Projet PHP to UML -------------------   */
+    
+    .square {
+        border: 1px solid black;
+        background-color: rgba(0, 136, 255, 0.347);
+        max-width: 400px;
+    }
+    
+    .italic {
+        font-style: italic;
+    }
+    
+    .gauche {
+        border: 2px blue;
+        width: 300px;
+        display: inline-block;
+    }
+    
+    .droite {
+        border: 2px red;
+        width: 400px;
+        display: inline-block;
+        vertical-align: 500px;
+    }
+    
+    .Section_0,
+    .Section_1,
+    .Section_2,
+    .Section_3,
+    .Section_4,
+    .Section_5 {
+        width: 400px;
+        display: inline-block;
+        /*border: 5px dashed green;*/
+        margin-bottom: 50px;
+        margin-right: 65px;
+    }
+    
+    svg {
+        /*
+        width: 500px;
+        height: 50px;
+        display: inline-block;
+        border: 5px dashed pink;
+        height: 150%;
+        position: absolute;
+        top: 0px;
+        left: 0px;*/
+    }
+    
+    div.Myclass {
+        border: 4px dashed blue;
+        width: 1400px;
+        padding-left: 10px;
+    }
+    
+    div.table_veritee {
+        /*
+        width: 500px;
+        height: 50px;*/
+        display: inline-block;
+        border: 1px dashed pink;
+        position: absolute;
+        top: 200px;
+        left: 400px;
+        height: 150px;
+        width: 250px;
+    }
+    
+    img.table_veritee {
+        /*
+        width: 500px;
+        height: 50px;*/
+        display: inline-block;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 150px;
+        width: 250px;
+    }
+    /* FOR MY UML CONNEXION
+*/
+    
+    .arrow {
+        stroke: rgb(0, 0, 0);
+        stroke-width: 2;
+        marker-end: url(#markerArrow)
+    }
