@@ -243,60 +243,54 @@ public function __toString()
     return $this->experiences;
   }
 
-  public function setAtout($atout)
-  {
-    $atout = (int) $atout;
-    
+  public function setAtout(int $atout)
+  {    
     if ($atout >= 0 && $atout <= 100)
     {
       $this->atout = $atout;
     }
   }
   
-  public function setDegats($degats)
-  {
-    $degats = (int) $degats;
-    
+  public function setDegats(int $degats)
+  {    
     if ($degats >= 0 && $degats <= 100)
     {
       $this->degats = $degats;
     }
   }
   
-  public function setId($id)
-  {
-    $id = (int) $id;
-    
+  public function setId(int $id)
+  {    
     if ($id > 0)
     {
       $this->id = $id;
     }
   }
   
-  public function setNom($nom)
+  public function setNom(string $nom)
   {
-    if (is_string($nom))
+    if (strlen($nom) > 2)
     {
       $this->nom = $nom;
     }
   }
   
-  public function setTimeEndormi($time)
+  public function setTimeEndormi(int $time)
   {
     $this->timeEndormi = (int) $time;
   }
 
-  public function setTimeWait($time)
+  public function setTimeWait(int $time)
   {
     $this->timeWait = (int) $time;
   }
 
-  public function setCoups_envoyees($value)
+  public function setCoups_envoyees(int $value)
   {
     $this->coups_envoyees = (int) $value;
   }
 
-  public function setNiveaux($value)
+  public function setNiveaux(int $value)
   {
     $this->niveaux = (int) $value;
     if ($this->niveaux <= 0) // interdit d'être <= à 0
@@ -305,7 +299,7 @@ public function __toString()
     }
   }
   
-  public function setExperiences($value)
+  public function setExperiences(int $value)
   {
     $this->experiences = (int) $value;
   }

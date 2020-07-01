@@ -27,7 +27,7 @@ class FileTransfer
     }
     else
     {
-        echo "Le fichier n'a pas pu être envoyé, réessayez ultérieurement.";
+        throw new Exception("Le fichier n'a pas pu être envoyé, réessayez ultérieurement.");
     }
     
   }
@@ -41,7 +41,7 @@ class FileTransfer
 
     // SETTER
 
-    public function setFile($tmp_file)
+    public function setFile(array $tmp_file)
     {
         $this->file = pathinfo($tmp_file['name']); 
     }
@@ -49,16 +49,14 @@ class FileTransfer
     public function setExtension()
     {
         $this->extension = $this->file['extension'];
-
-
     }
 
-    public function setName($tmp_file)
+    public function setName(array $tmp_file)
     {
         $this->name = basename($tmp_file['name'],'.php');
     }
 
-    public function setTmp_name($tmp_file)
+    public function setTmp_name(array $tmp_file)
     {
         $this->tmp_name = $tmp_file['tmp_name'];
     }
@@ -79,7 +77,8 @@ class FileTransfer
         }
         else
         {
-            echo "Extension non-autorisée";
+            throw new Exception("Extension non-autorisée pour le fichier <strong>".$this->name."</strong>.<br/>
+                                    Envoyez uniquement des fichiers au format PHP.");
         }
     } 
     /*
@@ -109,7 +108,7 @@ class FileTransfer
         }
         else
         {
-            echo "Le fichier n'existe pas, sauvegardez le avant avec SaveFile()";
+            throw new Exception("Le fichier n'existe pas, sauvegardez le avant avec SaveFile()");
         } 
     }
 /*
@@ -130,6 +129,10 @@ class FileTransfer
         if (file_exists("uploads/tempo_".$this->name.".php") )
         {
             unlink("uploads/tempo_".$this->name.".php");
+        }
+        else
+        {
+            throw new Exception('Le fichier que vous souhaitez supprimer <strong>'.$this->name.'</strong> n\'existe pas.');
         }
     }
     

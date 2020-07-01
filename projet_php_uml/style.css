@@ -446,9 +446,6 @@ a[title="ici"] {
     }
     
     div.table_veritee {
-        /*
-        width: 500px;
-        height: 50px;*/
         display: inline-block;
         border: 1px dashed pink;
         position: absolute;
@@ -456,6 +453,16 @@ a[title="ici"] {
         left: 400px;
         height: 150px;
         width: 250px;
+    }
+    
+    div.error {
+        border: 2px solid crimson;
+        position: absolute;
+        top: 225px;
+        left: 400px;
+        height: 125px;
+        width: 500px;
+        overflow-y: auto;
     }
     
     img.table_veritee {
@@ -475,5 +482,12 @@ a[title="ici"] {
     .arrow {
         stroke: rgb(0, 0, 0);
         stroke-width: 2;
-        marker-end: url(#markerArrow)
+        marker-end: url(#markerArrow);
+    }
+    
+    .dashed_arrow {
+        stroke: rgb(0, 0, 0);
+        stroke-width: 2;
+        marker-end: url(#markerArrow);
+        stroke-dasharray: 10 5;
     }

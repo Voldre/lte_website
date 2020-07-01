@@ -20,7 +20,7 @@ class FileReader
 
     public function hydrate($tmp_class_name)
   {
-    if (class_exists($tmp_class_name))
+    if (class_exists($tmp_class_name) || interface_exists($tmp_class_name)) // Si c'est une classe ou une interface...
     {
     //$this->setContent(); // Useless 
 
@@ -35,7 +35,7 @@ class FileReader
     else
     {
         //return self::PAS_UNE_CLASSE;
-        echo "Il n'y a pas de classe ".$tmp_class_name."!";
+        throw new Exception("Il n'y a pas de classe ni d'interface s'appellant <strong>".$tmp_class_name."</strong> !");
     }
     
   }
@@ -63,7 +63,18 @@ class FileReader
     
     public function setAttributs()
     {
-        $this->attributs = $this->reflection->getProperties();
+        if ($this->isChild())
+        {
+            $parent = $this->reflection->getParentClass()->getName();
+            if(!class_exists($parent))
+            {
+                throw new Exception("La classe <strong>".$this->class_name."</strong> possède une 
+                classe parent <strong>".$parent."</strong> qui n'a pas été déclaré avant celle-ci.<br/>
+                Veuillez déclarer <strong>".$parent."</strong> avant!");
+            }
+        }
+            $this->attributs = $this->reflection->getProperties();   
+    
     }
 
     public function setConstants()
@@ -78,22 +89,29 @@ class FileReader
     // Fonctionnalité
 
     public function Draw_UML_Format($allow = false)
-    {
+    {        
         $this->isChild($allow);
 
         $isAbstractClass = $this->isAbstractClass();
-        $this->DrawSquareName($this->class_name, $isAbstractClass);
 
-            ob_start();
-            $this->UML_Format("attributs");
+        if($this->isInterface())
+        {
+            $this->DrawSquareName("&#60;&#60;interface&#62;&#62;<br/>".$this->class_name,  $isAbstractClass);
+        }
+        else    // Pas d'attribut pour une interface ! Sinon juste pas affiché
+        {
+            $this->DrawSquareName($this->class_name, $isAbstractClass);
 
-            foreach($this->constants as $element => $value)
-            {
-                echo "+".$element.": const = ". $value."<br/>";
-            }
-            $contentTable = ob_get_clean();
-        $this->DrawSquare($contentTable);
+                ob_start();
+                $this->UML_Format("attributs");
 
+                foreach($this->constants as $element => $value)
+                {
+                    echo "+".$element.": const = ". $value."<br/>";
+                }
+                $contentTable = ob_get_clean();
+            $this->DrawSquare($contentTable);
+        }
         ob_start();
         $this->UML_Format("methodes");
         $contentTable_2 = ob_get_clean();
@@ -106,19 +124,30 @@ class FileReader
         // Come from :
         // https://stackoverflow.com/questions/36267390/how-to-get-parameter-type-in-reflected-class-method-php-5-x/36267781#36267781?newreg=810270cf45bc4bfaa86df3f482d0ce1f
         // And https://www.php.net/manual/fr/reflectionparameter.gettype.php
+
         public function getParameterType(ReflectionParameter $parameter)
         {
             $export = ReflectionParameter::export(
                 array(
                     $parameter->getDeclaringClass()->name,
                     $parameter->getDeclaringFunction()->name
-                ),
+                     ),
                 $parameter->name,
-                true
-            );
+                true                            );
             return preg_match('/[>] ([A-z]+) /', $export, $matches)
                 ? $matches[1] : null;
         }
+
+        // A voir... ---------------------------------------------------------------------------------------------------------------------------------------
+        /*
+        public function getPropertyType(ReflectionProperty $property)
+        {
+            $export = ReflectionProperty::export($property->getDeclaringClass()->name,
+                    $property->getName(), true );
+            return preg_match('/[>] ([A-z]+) /', $export, $matches)
+                ? $matches[1] : null;
+        }*/
+
 
 
     public function UML_Format($type)
@@ -128,11 +157,15 @@ class FileReader
         {
             $list = $this->attributs;
         }
-        if ($type == "methodes")
+        else if ($type == "methodes")
         {
             $list = $this->methods;
         }
-
+        else
+        {
+            throw new Exception("Ce type de format n'existe pas \"".$type."\", choisissez le type \"methodes\" ou \"attributs\".");
+        }
+        
         foreach ($list as $element)
         {
             $element->setAccessible(true);
@@ -162,14 +195,15 @@ class FileReader
 
             echo $element->getName();
 
-            /* SEARCH HOW WORKING IF INSTANCE NEEDS PARAMETERS
-            if (!$this->isAbstractClass() && $type == "attributs")
+            // SEARCH HOW WORKING IF INSTANCE NEEDS PARAMETERS
+            
+            if ($type == "attributs" /*&& !$this->isAbstractClass()*/)
             {
-                $var = gettype($element->getValue($this->instance));
-                echo $var."<br/>";
+                // A voir... ---------------------------------------------------------------------------------------------------------------------------------------
+                echo ":";//. $this->getPropertyType($element);
+                echo "<br/>";
             }
-            */
-            if ($type == "methodes")
+            else if ($type == "methodes")
             {
                 echo "(";
 
@@ -187,17 +221,14 @@ class FileReader
                                         // Because we are above PHP 7
                     echo $param->getName().": ".$this->getParameterType($param); 
                 }
-            echo "):<br/>";
-            }
-            else if ($type == "attributs")
-            {
-                echo ":"."<br/>";
+            echo "):";//.$param->getReturnType()
+            echo "<br/>";
             }
             $element->setAccessible(false); // désactiver l'accès aux attributs (privé et protégé)
         }      
     }
 
-    public function isChild($allow)
+    public function isChild($allow = false)
     {   
         if($parent = $this->reflection->getParentClass())
         {
@@ -237,24 +268,40 @@ class FileReader
     
     public function isAbstractClass()
     {
-
         if (!$this->reflection->isAbstract())
         {
             /* SEARCH HOW WORKING IF INSTANCE NEEDS PARAMETERS
             $objet = new $this->$class_name();
             $this->instance = $objet;
             */
-
-            return false; // Permet d'afficher les types des attributs!
-            // Si on fait un return sans créer $isAbstractClass, alors on les voient pas!
+            return false;
         }
         else
         {
           return true; // Write name class in Italic
         }
+    }
 
+    public function getRepository()
+    {
+        return $this->reflection->getFileName();
+                                //getShortName();
     }
     
+
+    public function isInterface()
+    {
+        return $this->reflection->isInterface();
+    }
+    
+    public function implementsInterface(FileReader $interface)
+    {
+        if(!class_exists($interface->class_name())) // Si l'interface envoyé est une classe, on ne fait rien, sinon ...
+        { 
+            return $this->reflection->implementsInterface( $interface->class_name() ) ;
+        }
+    }
+
     // IMPLETEMENTATION
     
     public function DrawSquare($content)

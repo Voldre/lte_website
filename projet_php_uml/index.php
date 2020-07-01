@@ -42,7 +42,21 @@ for ($i = 0; $i < 6; $i++)
 <section>
 <?php 
 //require_once('index1.php");
+
+try
+{
 require_once('indexPOO.php');
+}
+catch(Exception $e)
+{
+    echo "<div class=\"error\">";
+
+    echo $e->getMessage();
+    
+    echo "</div>";
+
+}
+
 ?>
 </section>
 

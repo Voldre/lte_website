@@ -4,8 +4,8 @@
 require_once("FileTransfer.php");
 require_once("FileReader.php");
 
-function DrawIfHeritage($i,$j)
-{
+function DrawIfHeritage($i, $j, $interface = false)
+{   // Choose each position on the truth table
   if($i == 0)
   {    $x1 = 55; $y1 = 45;  }
   if($j == 0)
@@ -37,7 +37,8 @@ function DrawIfHeritage($i,$j)
   if($j == 5)
   {    $x2 = 205;    $y2 = 100;  }
 
-  echo "<line x1=".$x2." y1=".$y2." x2=".$x1." y2=".$y1." class=\"arrow\" />";
+  if ($interface) {  echo "<line x1=".$x2." y1=".$y2." x2=".$x1." y2=".$y1." class=\"dashed_arrow\" />";  }
+  else {  echo "<line x1=".$x2." y1=".$y2." x2=".$x1." y2=".$y1." class=\"arrow\" />"; }
 }
 
 
@@ -98,8 +99,8 @@ foreach ($_FILES as $file) // Lire TOUS LES FICHIERS ENVOYEES
 
     $Transfile[$index] = new FileTransfer($file);
     $Transfile[$index]->SaveFile(false);
+    
     $Transfile[$index]->OpenFile();
-
 
     $File[$index] = new FileReader($Transfile[$index]->name());
 
@@ -107,9 +108,10 @@ foreach ($_FILES as $file) // Lire TOUS LES FICHIERS ENVOYEES
     $File[$index]->Draw_UML_Format(false);
 
     echo "</section>";
-    //echo "<svg class=Section_".$index."></svg>";
 
-    $Transfile[$index]->DeleteFile();
+    //echo "<svg class=Section_".$index."></svg>";
+    
+    $Transfile[$index]->DeleteFile(); // Eviter la surcharge inutile
 
     $index++;
   }
@@ -148,7 +150,7 @@ if ($index != 0)
   echo "<div class=\"table_veritee\">";
   echo "<img class=\"table_veritee\" src=\"working php uml.png\" />"; 
 
-  ob_start();
+  ob_start();   // On récupère l'initialisation de l'affichage des flèches
   ?>
     <svg>
     <defs>
@@ -157,7 +159,7 @@ if ($index != 0)
             <path d="M3,2 L3,10 L8,6 L3,3" style="fill: grey;" />
         </marker>
     </defs>
-      <!--<line x1="10" y1="0" x2="110" y2="100" class="arrow" />-->
+           <!--<line x1="10" y1="0" x2="110" y2="100" class="arrow" />-->
   <?php
   echo ob_get_clean();
   
@@ -168,12 +170,14 @@ if ($index != 0)
 
       if ($i != $j) // On ne compare pas 2 fichiers identique
       {
-        if($File[$j]->isChildOf( $File[$i] ) )
+        if($File[$j]->isChildOf( $File[$i] ) ) // Héritage flèche solide
         {
-
          DrawIfHeritage($i,$j);
          // echo "<p>moi child ".$j." et moi mother ".$i."</p>";
-
+        }
+        else if($File[$j]->implementsInterface( $File[$i] )) // Implémentation flèche dashed
+        {
+         DrawIfHeritage($i,$j,true);
         }
       }
 
